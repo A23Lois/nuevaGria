@@ -14,4 +14,6 @@ Para poder comenzar a trabajar con el proyecto se deberá ejecutar el siguiente 
 
 4.- composer require serializer (para pasar de JSON a objetos y de objetos a JSON)
 
-5.- composer require asset-mapper (para organizar y mapear los archivos y los estilos)
+5.- composer require asset-mapper (para organizar y mapear los archivos y los estilos // si no funciona en produccion revisar enlace marcado en edge) 
+
+    para hacer el mapeo php bin/console asset-map  
