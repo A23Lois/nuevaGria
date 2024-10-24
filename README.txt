@@ -15,5 +15,8 @@ Para poder comenzar a trabajar con el proyecto se deberá ejecutar el siguiente 
 4.- composer require serializer (para pasar de JSON a objetos y de objetos a JSON)
 
 5.- composer require asset-mapper (para organizar y mapear los archivos y los estilos // si no funciona en produccion revisar enlace marcado en edge) 
+    //para hacer el mapeo php bin/console asset-map  
 
-    para hacer el mapeo php bin/console asset-map  
+6.- composer require symfony/orm-pack y composer require --dev symfony/maker-bundle (para las bases de datos con doctrine)
+
+7.- composer require doctrine/dbal (para poder conectar a una base de datos en sqlserver)
