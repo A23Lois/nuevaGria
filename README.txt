@@ -24,3 +24,10 @@ Para poder comenzar a trabajar con el proyecto se deberá ejecutar el siguiente 
 8.- composer require symfony/http-client (para poder usar las apis)
 
 9.- composer require security (para usuarios)
+
+10.- composer require form-validator (para hacer los forms)
+
+11.- composer require symfonycasts/verify-email-bundle (para hacer más comodamente el registro de usuarios)
+    //para hacer el form php bin/console make:registration-form
+    
+12.- composer require symfony/mailer (para poder mandar correos de confirmacion)
