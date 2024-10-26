@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MediasApiController  extends AbstractController{
 
-    public function getSerie(int $idSerie, SeriesPruebaRepository $seriesPruebaRepository)
+    public function getSeriePrueba(int $idSerie, SeriesPruebaRepository $seriesPruebaRepository)
     {   
         $serie = $seriesPruebaRepository->getById($idSerie);
         return $serie;

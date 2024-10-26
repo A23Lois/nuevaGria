@@ -3,7 +3,7 @@ namespace App\Service;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-class ImdbApiService
+class ImdbSrv
 {
     private $cliente;
     private $apiKey;
@@ -14,7 +14,7 @@ class ImdbApiService
         $this->apiKey = '2ec6026315mshd5a3cb94351a767p1875a3jsnf63cc2b04641'; 
     }
 
-    public function getMovieDetails($movieId)
+    public function getPelicula($movieId)
     {
         $response = $this->cliente->request('GET', 'https://imdb-api.p.rapidapi.com/title', [
             'query' => [
