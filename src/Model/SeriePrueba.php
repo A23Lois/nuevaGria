@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class Serie {
+class SeriePrueba {
     public function __construct( private int $id, private string $title, private string $genre, private string $creator, private string $status )
     {
         

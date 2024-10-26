@@ -20,3 +20,5 @@ Para poder comenzar a trabajar con el proyecto se deberá ejecutar el siguiente 
 6.- composer require symfony/orm-pack y composer require --dev symfony/maker-bundle (para las bases de datos con doctrine)
 
 7.- composer require doctrine/dbal (para poder conectar a una base de datos en sqlserver)
+
+8.- composer require symfony/http-client para poder usar las apis
