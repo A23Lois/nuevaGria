@@ -1,6 +1,6 @@
-{% extends 'base.html.twig' %} 
+{% extends 'base.twig' %} 
 {% block title %} {{ parent() }} | Incio
 {% endblock %}
 {% block body %}
-<a class="btn btn-primario" href="{{path('serie',{idSerie:1})}}">SERIE 1</a>
+<a class="btn btn-primario" href="{{path('SeriePrueba',{idSerie:1})}}">SERIE 1</a>
 {% endblock %}
