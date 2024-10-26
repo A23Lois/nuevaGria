@@ -21,4 +21,6 @@ Para poder comenzar a trabajar con el proyecto se deberá ejecutar el siguiente 
 
 7.- composer require doctrine/dbal (para poder conectar a una base de datos en sqlserver)
 
-8.- composer require symfony/http-client para poder usar las apis
+8.- composer require symfony/http-client (para poder usar las apis)
+
+9.- composer require security (para usuarios)

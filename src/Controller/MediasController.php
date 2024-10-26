@@ -22,7 +22,7 @@ class MediasController extends AbstractController
     }
 
     #[Route('pruebas/peliculaImdb/{idPelicula}', name: 'PeliculaImdbPrueba')]
-    public function mostrarPeliculaImdbPrueba(int $idPelicula,ImdbSrv $ImdbSrv)    
+    public function mostrarPeliculaImdbPrueba(string $idPelicula, ImdbSrv $ImdbSrv)    
     {
         $movieDetails = $ImdbSrv->getPelicula($idPelicula);
 
