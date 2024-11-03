@@ -24,6 +24,18 @@ class TipoAporteRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function getById($id): TipoAporte
+    {
+       return $this->createQueryBuilder('tipoAporte')
+           ->andWhere('tipoAporte.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('tipoAporte.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()[0]
+        ;
+    }
     //    /**
     //     * @return TipoAporte[] Returns an array of TipoAporte objects
     //     */

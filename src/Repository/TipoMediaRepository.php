@@ -24,6 +24,19 @@ class TipoMediaRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function getById($id): TipoMedia
+    {
+       return $this->createQueryBuilder('tipoMedia')
+           ->andWhere('tipoMedia.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('tipoMedia.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getFirstResult()[0]
+        ;
+    }
+
     //    /**
     //     * @return TipoMedia[] Returns an array of TipoMedia objects
     //     */

@@ -52,7 +52,11 @@ public function __construct(private GestionApiController $gestionApiController)
         ]);
 
     }
-//----------NUEVOS
+
+//----------GESTION DE TABLAS
+
+    //--------------TIPO APORTE
+        //--------------NUEVO
     #[Route('/gestion/nuevoTipoAporte', name:'nuevoTipoAporte')]
     public function nuevoTipoAporte(TipoAporteRepository $repo, Request $request){
         $tipoAporte = new TipoAporte();
@@ -62,9 +66,23 @@ public function __construct(private GestionApiController $gestionApiController)
             $post = $form->getData();
             return $this->gestionApiController->guardarTipoAporte($repo, $post);
         }
-        return $this->render('gestion/nuevoTipoAporte.twig',['form' => $form]);
+        return $this->render('gestion/editarTipoAporte.twig',['form' => $form]);
+    }
+        //--------------EDITAR
+    #[Route('/gestion/editarTipoAporte/{id}', name:'editarTipoAporte')]
+    public function editarTipoAporte(TipoAporteRepository $repo, Request $request, int $id){
+        $tipoAporte = $repo->getById($id);
+        $form = $this->createForm(TipoAporteFormType::class, $tipoAporte);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $post = $form->getData();
+            return $this->gestionApiController->guardarTipoAporte($repo, $post);
+        }
+        return $this->render('gestion/editarTipoAporte.twig',['form' => $form]);
     }
 
+    //--------------TIPO MEDIA
+        //--------------NUEVO
     #[Route('/gestion/nuevoTipoMedia', name:'nuevoTipoMedia')]
     public function nuevoTipoMedia(TipoMediaRepository $repo, Request $request){
         $tipoMedia = new TipoMedia();
@@ -74,6 +92,18 @@ public function __construct(private GestionApiController $gestionApiController)
             $post = $form->getData();
             return $this->gestionApiController->guardarTipoMedia($repo, $post);
         }
-        return $this->render('gestion/nuevoTipoMedia.twig',['form' => $form]);
+        return $this->render('gestion/editarTipoMedia.twig',['form' => $form]);
+    }
+        //--------------EDITAR
+    #[Route('/gestion/editarTipoMedia/{id}', name:'editarTipoMedia')]
+    public function editarTipoMedia(TipoMediaRepository $repo, Request $request, int $id){
+        $tipoMedia = $repo->getById($id);
+        $form = $this->createForm(TipoMediaFormType::class, $tipoMedia);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $post = $form->getData();
+            return $this->gestionApiController->guardarTipoMedia($repo, $post);
+        }
+        return $this->render('gestion/editarTipoMedia.twig',['form' => $form]);
     }
 }
