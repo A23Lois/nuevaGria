@@ -16,11 +16,13 @@ class TipoMediaRepository extends ServiceEntityRepository
         parent::__construct($registry, TipoMedia::class);
     }
 
-    public function getAll(): array
+    public function add(TipoMedia $tipoMedia, bool $flush = false): void
     {
-        return $this->createQueryBuilder('tipoMedia')
-            ->getQuery()
-            ->getResult();
+        $this->getEntityManager()->persist($tipoMedia);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
     }
     //    /**
     //     * @return TipoMedia[] Returns an array of TipoMedia objects

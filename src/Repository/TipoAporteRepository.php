@@ -16,11 +16,13 @@ class TipoAporteRepository extends ServiceEntityRepository
         parent::__construct($registry, TipoAporte::class);
     }
 
-        public function getAll(): array
+    public function add(TipoAporte $tipoAporte, bool $flush = false): void
     {
-        return $this->createQueryBuilder('tipoAporte')
-            ->getQuery()
-            ->getResult();
+        $this->getEntityManager()->persist($tipoAporte);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
     }
     //    /**
     //     * @return TipoAporte[] Returns an array of TipoAporte objects

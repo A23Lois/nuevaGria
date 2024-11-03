@@ -31,3 +31,5 @@ Para poder comenzar a trabajar con el proyecto se deberá ejecutar el siguiente 
     //para hacer el form php bin/console make:registration-form
     
 12.- composer require symfony/mailer (para poder mandar correos de confirmacion)
+
+12.- composer require symfony/form (para poder usar los forms)

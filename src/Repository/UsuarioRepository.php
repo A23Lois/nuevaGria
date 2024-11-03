@@ -34,13 +34,6 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
         
     }
 
-    public function getAll(): array
-    {
-        return $this->createQueryBuilder('usuario')
-            ->getQuery()
-            ->getResult();
-    }
-
     //    /**
     //     * @return Usuario[] Returns an array of Usuario objects
     //     */
