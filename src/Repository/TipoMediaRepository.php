@@ -16,6 +16,12 @@ class TipoMediaRepository extends ServiceEntityRepository
         parent::__construct($registry, TipoMedia::class);
     }
 
+    public function getAll(): array
+    {
+        return $this->createQueryBuilder('tipoMedia')
+            ->getQuery()
+            ->getResult();
+    }
     //    /**
     //     * @return TipoMedia[] Returns an array of TipoMedia objects
     //     */

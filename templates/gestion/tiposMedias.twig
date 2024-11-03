@@ -1,0 +1,9 @@
+{% extends 'base.twig' %} 
+{% block title %} {{ parent() }} | Tipos de Medias
+{% endblock %}
+{% block body %}
+<div><h3>Estos son todos los tipos de media que hay:</h3></div>
+{% for tipoMedia in tiposMedias %}
+    <div><h4>{{ tipoMedia.tipoMedia }}</h4></div>
+{% endfor %}
+{% endblock %}

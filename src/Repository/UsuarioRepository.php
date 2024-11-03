@@ -31,6 +31,14 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
+        
+    }
+
+    public function getAll(): array
+    {
+        return $this->createQueryBuilder('usuario')
+            ->getQuery()
+            ->getResult();
     }
 
     //    /**
