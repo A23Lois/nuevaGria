@@ -16,6 +16,26 @@ class MediaRepository extends ServiceEntityRepository
         parent::__construct($registry, Media::class);
     }
 
+    public function add(Media $media, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($media);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function getById($id): Media
+    {
+       return $this->createQueryBuilder('media')
+           ->andWhere('media.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('media.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getFirstResult()[0]
+        ;
+    }
     //    /**
     //     * @return Media[] Returns an array of Media objects
     //     */

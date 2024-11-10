@@ -1,0 +1,9 @@
+{% extends 'base.twig' %} 
+{% block title %} {{ parent() }} | Medias
+{% endblock %}
+{% block body %}
+<div><h3>Estos son todas las medias que hay:</h3></div>
+{% for media in medias %}
+    <div><h4>{{ media.titulo }}</h4></div>
+{% endfor %}
+{% endblock %}

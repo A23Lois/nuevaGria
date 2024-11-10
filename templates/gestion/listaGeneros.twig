@@ -1,0 +1,9 @@
+{% extends 'base.twig' %} 
+{% block title %} {{ parent() }} | Generos
+{% endblock %}
+{% block body %}
+<div><h3>Estos son todos los generos que hay:</h3></div>
+{% for genero in generos %}
+    <div><h4>{{ genero.genero }}</h4></div>
+{% endfor %}
+{% endblock %}

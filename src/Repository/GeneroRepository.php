@@ -16,6 +16,26 @@ class GeneroRepository extends ServiceEntityRepository
         parent::__construct($registry, Genero::class);
     }
 
+    public function add(Genero $genero, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($genero);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function getById($id): Genero
+    {
+       return $this->createQueryBuilder('genero')
+           ->andWhere('genero.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('genero.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getFirstResult()[0]
+        ;
+    }
     //    /**
     //     * @return Genero[] Returns an array of Genero objects
     //     */
