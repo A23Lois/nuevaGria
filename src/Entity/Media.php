@@ -32,6 +32,9 @@ class Media
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $fechaEstreno = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?string $descripcion = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Media
     public function setFechaEstreno(\DateTimeInterface $fechaEstreno): static
     {
         $this->fechaEstreno = $fechaEstreno;
+
+        return $this;
+    }
+
+    public function getDescripcion(): ?string
+    {
+        return $this->descripcion;
+    }
+
+    public function setDescripcion(?string $descripcion): static
+    {
+        $this->descripcion = $descripcion;
 
         return $this;
     }
