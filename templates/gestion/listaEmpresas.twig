@@ -1,0 +1,9 @@
+{% extends 'base.twig' %} 
+{% block title %} {{ parent() }} | Generos
+{% endblock %}
+{% block body %}
+<div><h3>Estos son todas las empresas que hay:</h3></div>
+{% for empresa in empresas %}
+    <div><h4>{{ empresa.nombre }}</h4></div>
+{% endfor %}
+{% endblock %}

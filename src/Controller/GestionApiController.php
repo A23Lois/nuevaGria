@@ -6,6 +6,7 @@ use App\Repository\GeneroRepository;
 use App\Repository\TipoAporteRepository;
 use App\Repository\TipoMediaRepository;
 use App\Repository\MediaRepository;
+use App\Repository\EmpresaRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GestionApiController extends AbstractController
@@ -42,5 +43,12 @@ class GestionApiController extends AbstractController
         $repo->add($post, true);
         $this->addFlash('success', 'Se ha añadido correctamente la media.');
         return $this->redirectToRoute('listaMedias');
+    }
+
+        public function guardarEmpresa (EmpresaRepository $repo, $post)
+    {
+        $repo->add($post, true);
+        $this->addFlash('success', 'Se ha añadido correctamente la empresa.');
+        return $this->redirectToRoute('listaEmpresas');
     }
 }

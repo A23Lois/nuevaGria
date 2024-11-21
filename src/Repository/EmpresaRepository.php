@@ -16,6 +16,26 @@ class EmpresaRepository extends ServiceEntityRepository
         parent::__construct($registry, Empresa::class);
     }
 
+    public function add(Empresa $empresa, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($empresa);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function getById($id): Empresa
+    {
+       return $this->createQueryBuilder('empresa')
+           ->andWhere('empresa.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('empresa.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getFirstResult()[0]
+        ;
+    }
     //    /**
     //     * @return Empresa[] Returns an array of Empresa objects
     //     */

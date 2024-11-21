@@ -6,15 +6,18 @@ use App\Entity\TipoAporte;
 use App\Entity\TipoMedia;
 use App\Entity\Media;
 use App\Entity\Genero;
+use App\Entity\Empresa;
 use App\Repository\TipoAporteRepository;
 use App\Repository\TipoMediaRepository;
 use App\Repository\GeneroRepository;
 use App\Repository\MediaRepository;
+use App\Repository\EmpresaRepository;
 use App\Repository\UsuarioRepository;
 use App\Form\TipoMediaFormType;
 use App\Form\TipoAporteFormType;
 use App\Form\GeneroFormType;
 use App\Form\MediaFormType;
+use App\Form\EmpresaFormType;
 use App\Controller\GestionApiController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -75,6 +78,16 @@ public function __construct(private GestionApiController $gestionApiController)
 
         return $this->render('gestion/listaMedias.twig',[
             'medias' => $repo->findAll()
+        ]);
+
+    }
+
+    #[Route('gestion/listaEmpresas', name:'listaEmpresas')]
+    public function mostrarEmpresas(EmpresaRepository $repo) : Response
+    {
+
+        return $this->render('gestion/listaEmpresas.twig',[
+            'empresas' => $repo->findAll()
         ]);
 
     }
@@ -186,4 +199,29 @@ public function __construct(private GestionApiController $gestionApiController)
             }
             return $this->render('gestion/editarMedia.twig',['form' => $form]);
         }
+    //--------------EMPRESA
+        //--------------NUEVO
+    #[Route('/gestion/nuevaEmpresa', name:'nuevaEmpresa')]
+    public function nuevaEmpresa(EmpresaRepository $repo, Request $request){
+        $empresa = new Empresa();
+        $form = $this->createForm(EmpresaFormType::class, $empresa);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $post = $form->getData();
+            return $this->gestionApiController->guardarEmpresa($repo, $post);
+        }
+        return $this->render('gestion/editarEmpresa.twig',['form' => $form]);
+    }
+        //--------------EDITAR
+    #[Route('/gestion/editarEmpresa/{id}', name:'editarEmpresa')]
+    public function editarEmpresa(EmpresaRepository $repo, Request $request, int $id){
+        $empresa = $repo->getById($id);
+        $form = $this->createForm(EmpresaFormType::class, $empresa);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $post = $form->getData();
+            return $this->gestionApiController->guardarEmpresa($repo, $post);
+        }
+        return $this->render('gestion/editarEmpresa.twig',['form' => $form]);
+    }
 }
