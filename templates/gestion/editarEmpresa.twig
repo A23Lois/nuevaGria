@@ -2,5 +2,10 @@
 {% block title %} {{ parent() }} | Nueva Empresa
 {% endblock %}
 {% block body %}
-{{ form(form)}}
+<div class="row">
+    <div class="col-10 offset-1 ficha">
+        {{ form(form)}}
+    </div>
+</div>
+
 {% endblock %}

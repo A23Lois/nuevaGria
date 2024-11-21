@@ -20,6 +20,8 @@ class Media
     #[ORM\Column(length: 255)]
     private ?string $tituloOriginal = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $urlImagen = null;
     #[ORM\Column]
     private ?int $idTipoMedia = null;
 
@@ -120,6 +122,19 @@ class Media
     public function setDescripcion(?string $descripcion): static
     {
         $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+
+    public function getUrlImagen(): ?string
+    {
+        return $this->urlImagen;
+    }
+
+    public function setUrlImagen(?string $urlImagen): static
+    {
+        $this->urlImagen = $urlImagen;
 
         return $this;
     }

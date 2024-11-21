@@ -36,7 +36,8 @@ use App\Form\EmpresaFormType;
 use App\Form\PersonaFormType;
 
 use App\Controller\GestionApiController;
-
+use App\Service\OmdbApiClient;
+use App\Service\OpenLibrarySrv;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -276,5 +277,30 @@ public function __construct(private GestionApiController $gestionApiController)
             return $this->gestionApiController->guardarPersona($repo, $post);
         }
         return $this->render('gestion/editarPersona.twig',['form' => $form]);
+    }
+//-------------API
+    #[Route('/gestion/api/pelicula/{titulo}', name:'apiPelicula')]
+    public function cargarPelicula(string $titulo, OmdbApiClient $api)
+    {
+        $datos = $api->fetchMovie($titulo);
+        dd($datos);
+    }
+
+    #[Route('gestion/api/libros', name: 'apiLibros')]
+    public function index(OpenLibrarySrv $openLibrarySrv): Response
+    {
+        // Obtener todos los libros de Open Library
+        $booksFromOpenLibrary = $openLibrarySrv->getAllBooksFromOpenLibrary();
+
+        // Obtener todos los libros de Gutendex
+        $booksFromGutendex = $openLibrarySrv->getAllBooksFromGutendex();
+
+        // Combinamos ambos resultados
+        $allBooks = array_merge($booksFromOpenLibrary, $booksFromGutendex);
+        dd($allBooks);
+        // Mostrar los libros en una vista (por ejemplo, con Twig)
+        return $this->render('book/index.html.twig', [
+            'books' => $allBooks,
+        ]);
     }
 }

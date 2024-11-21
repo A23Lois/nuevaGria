@@ -18,6 +18,13 @@ class MediaRepository extends ServiceEntityRepository
 
     public function add(Media $media, bool $flush = false): void
     {
+        if($media->getIdPrecuela() == 0){
+            $media->setIdPrecuela(null);
+        }
+        if($media->getIdSecuela() == 0){
+            $media->setIdSecuela(null);
+        }
+        
         $this->getEntityManager()->persist($media);
 
         if ($flush) {

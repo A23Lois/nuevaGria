@@ -26,7 +26,7 @@ final class Version20241119182936 extends AbstractMigration
         $this->addSql('CREATE TABLE genero (id INT IDENTITY NOT NULL, genero NVARCHAR(100) NOT NULL, tipo_media INT NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE TABLE genero_media (id INT IDENTITY NOT NULL, id_genero INT NOT NULL, id_media INT NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE TABLE lista_media (id INT IDENTITY NOT NULL, id_usuario INT NOT NULL, id_media INT NOT NULL, PRIMARY KEY (id))');
-        $this->addSql('CREATE TABLE media (id INT IDENTITY NOT NULL, titulo NVARCHAR(255) NOT NULL, titulo_original NVARCHAR(255) NOT NULL, descripcion NVARCHAR(4000), id_tipo_media INT NOT NULL, id_precuela INT, id_secuela INT, fecha_estreno DATETIME2(6) NOT NULL, PRIMARY KEY (id))');
+        $this->addSql('CREATE TABLE media (id INT IDENTITY NOT NULL, titulo NVARCHAR(255) NOT NULL, titulo_original NVARCHAR(255) NOT NULL, descripcion NVARCHAR(4000),url_imagen NVARCHAR(255), id_tipo_media INT NOT NULL, id_precuela INT, id_secuela INT, fecha_estreno DATETIME2(6) NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE TABLE persona (id INT IDENTITY NOT NULL, nombre NVARCHAR(255) NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE TABLE persona_media (id INT IDENTITY NOT NULL, id_persona INT NOT NULL, id_media INT NOT NULL, id_tipo_aporte INT NOT NULL, PRIMARY KEY (id))');
         $this->addSql('CREATE TABLE tipo_aporte (id INT IDENTITY NOT NULL, tipo_aporte NVARCHAR(100) NOT NULL, PRIMARY KEY (id))');

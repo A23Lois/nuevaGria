@@ -43,7 +43,8 @@ class MediaFormType extends AbstractType
         $builder
         ->add('Titulo', TextType::class,['attr' => ['class' => 'form-control']])
         ->add('TituloOriginal', TextType::class,['attr' => ['class' => 'form-control']])
-        ->add('Descripcion', TextareaType::class,['attr' => ['class' => 'form-control']]);
+        ->add('Descripcion', TextareaType::class,['attr' => ['class' => 'form-control', 'rows'=>'10']])
+        ->add('UrlImagen', TextType::class,['attr' => ['class' => 'form-control']]);
         if(Count($arrayTiposMedia) > 0)
         {
             $builder->add('IdTipoMedia', ChoiceType::class, [ 
@@ -62,10 +63,10 @@ class MediaFormType extends AbstractType
         }
         $builder->add('fechaEstreno', DateType::class, [
             'widget' => 'choice',
-            'years' => range(1990, date('Y')),
+            'years' => range(1950, date('Y')),
             'data' => new \DateTime(),
             'format' => 'ddMMyyyy',])
-        ->add('submit', SubmitType::class);
+        ->add('guardar', SubmitType::class,['attr' => ['class' => 'btn btn-primario mt-2']]);
         return $builder;
     }
 

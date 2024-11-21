@@ -13,60 +13,60 @@
         {% endblock %}
     </head>
     <body>
-            <nav class="navbar navbar-primario">
-                <div class="container-fluid">
-                    <!-- Botón de offcanvas para abrir el sidebar -->
-                    <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <a class="navbar-brand ms-3" href="{{ path('app_home_index') }}">
-                        Gria
-                    </a>
-                    
-                    <!-- Botón de inicio de sesión alineado a la derecha -->
-                    <div class=" ms-auto">
-                        <a class="btn btn-primario" href="{{ path('app_login') }}">Iniciar sesión</a>
-                        <a class="btn btn-primario  ms-auto" href="{{ path('app_register') }}">Registrarse</a>
-                    </div>
-                </div>
-            </nav>
-
-            <!-- Offcanvas Sidebar -->
-            <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Menú</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <div class="offcanvas-body">
-                    <!-- Enlaces de navegación dentro del sidebar -->
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ path('app_home_index') }}">Inicio</a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="nav-link active" aria-current="page" href="{{ path('nuevaMedia') }}">Nueva Media</a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="nav-link active" aria-current="page" href="{{ path('nuevoTipoAporte') }}">Nuevo Tipo de Aporte</a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="nav-link active" aria-current="page" href="{{ path('nuevoTipoMedia') }}">Nuevo Tipo de Media</a>
-                        </li>
-                        <li class="nav-item"> 
-                            <a class="nav-link active" aria-current="page" href="{{ path('nuevoGenero') }}">Nuevo Genero</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Acerca de</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Servicios</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Contacto</a>
-                        </li>
-                    </ul>
+        <nav class="navbar navbar-primario">
+            <div class="container-fluid">
+                <!-- Botón de offcanvas para abrir el sidebar -->
+                <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand ms-3" href="{{ path('app_home_index') }}">
+                    Gria
+                </a>
+                
+                <!-- Botón de inicio de sesión alineado a la derecha -->
+                <div class=" ms-auto">
+                    <a class="btn btn-primario" href="{{ path('app_login') }}">Iniciar sesión</a>
+                    <a class="btn btn-primario  ms-auto" href="{{ path('app_register') }}">Registrarse</a>
                 </div>
             </div>
+        </nav>
+
+        <!-- Offcanvas Sidebar -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Menú</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Enlaces de navegación dentro del sidebar -->
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ path('app_home_index') }}">Inicio</a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" aria-current="page" href="{{ path('nuevaMedia') }}">Nueva Media</a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" aria-current="page" href="{{ path('nuevoTipoAporte') }}">Nuevo Tipo de Aporte</a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" aria-current="page" href="{{ path('nuevoTipoMedia') }}">Nuevo Tipo de Media</a>
+                    </li>
+                    <li class="nav-item"> 
+                        <a class="nav-link active" aria-current="page" href="{{ path('nuevoGenero') }}">Nuevo Genero</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Acerca de</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
         <div class="container-fluid">
 

@@ -2,5 +2,9 @@
 {% block title %} {{ parent() }} | Nueva Persona
 {% endblock %}
 {% block body %}
-{{ form(form)}}
+<div class="row">
+    <div class="col-10 offset-1 ficha">
+        {{ form(form)}}
+    </div>
+</div>
 {% endblock %}

@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class GeneroFormType extends AbstractType
 {
@@ -29,12 +30,11 @@ class GeneroFormType extends AbstractType
 
         $builder
         ->add('TipoMedia', ChoiceType::class, [
-
+            'attr' => ['class' => 'form-control'],
             'choices' => $arrayTiposMedia,
-
         ])        
-        ->add('Genero')
-        ->add('submit', SubmitType::class);
+        ->add('Genero', TextType::class,['attr' => ['class' => 'form-control']])
+        ->add('guardar', SubmitType::class,['attr' => ['class' => 'btn btn-primario mt-2']]);
         return $builder;
     }
 
