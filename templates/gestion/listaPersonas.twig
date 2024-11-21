@@ -1,0 +1,9 @@
+{% extends 'base.twig' %} 
+{% block title %} {{ parent() }} | Personas
+{% endblock %}
+{% block body %}
+<div><h3>Estos son todas las personas que hay:</h3></div>
+{% for persona in personas %}
+    <div><h4>{{ persona.nombre }}</h4></div>
+{% endfor %}
+{% endblock %}

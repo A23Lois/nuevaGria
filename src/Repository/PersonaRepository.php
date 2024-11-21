@@ -16,6 +16,26 @@ class PersonaRepository extends ServiceEntityRepository
         parent::__construct($registry, Persona::class);
     }
 
+    public function add(Persona $persona, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($persona);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function getById($id): Persona
+    {
+       return $this->createQueryBuilder('persona')
+           ->andWhere('persona.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('persona.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getFirstResult()[0]
+        ;
+    }
     //    /**
     //     * @return Persona[] Returns an array of Persona objects
     //     */
