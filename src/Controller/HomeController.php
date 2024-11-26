@@ -16,5 +16,14 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[Route('/buscar/{nombre}', name:'buscar')]
+    public function buscar(string $nombre)
+    { 
+        dd($nombre);
+        return $this->render('home/index.twig',[
+            'medias' => $repo->findUltimas10()
+        ]);
+    }
+
     
 }

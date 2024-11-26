@@ -23,7 +23,12 @@
                 <a class="navbar-brand ms-3 titulo-primario" href="{{ path('app_home_index') }}">
                     Gria
                 </a>
-                
+                <div class="col-6">
+                    <div class=" input-group">
+                    <input class="form-control color-primario" id="buscador" placeholder="Busca un producto...">
+                    <a class="btn btn-primario" id="btnBuscar">Buscar</a>
+                </div>
+                </div>
                 <!-- Botón de inicio de sesión alineado a la derecha -->
                 <div class=" ms-auto">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -136,3 +141,20 @@
         </footer>
     </body>
 </html>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script>
+    const botonNav = document.getElementById("btnBuscar");
+    const barraBusqNav =  document.getElementById("buscador");
+
+    barraBusqNav.addEventListener("input",(event)=>{
+        let texto = "{{path('buscar',{nombre:'busqueda'})}}";
+        texto = texto.replace('busqueda',event.target.value);
+        botonNav.href = texto;
+    });
+
+    var offcanvasElementList = [].slice.call(document.querySelectorAll('.offcanvas'))
+    var offcanvasList = offcanvasElementList.map(function (offcanvasEl) {
+    return new bootstrap.Offcanvas(offcanvasEl)
+    })
+</script>
