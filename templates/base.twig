@@ -6,6 +6,7 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha256-fx038NkLY4U1TCrBDiu5FWPEa9eiZu01EiLryshJbCo=" crossorigin="anonymous">
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         {% endblock %}
 
         {% block javascripts %}
@@ -16,53 +17,76 @@
         <nav class="navbar navbar-primario">
             <div class="container-fluid">
                 <!-- Botón de offcanvas para abrir el sidebar -->
-                <button class="btn btn-primario" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <a class="navbar-brand ms-3" href="{{ path('app_home_index') }}">
+                <a  data-bs-toggle="offcanvas" data-bs-target="#offcanvasSidebar" aria-controls="offcanvasSidebar">
+                    <i class="bi bi-x-diamond-fill icono-primario"></i>
+                </a>
+                <a class="navbar-brand ms-3 titulo-primario" href="{{ path('app_home_index') }}">
                     Gria
                 </a>
                 
                 <!-- Botón de inicio de sesión alineado a la derecha -->
                 <div class=" ms-auto">
-                    <a class="btn btn-primario" href="{{ path('app_login') }}">Iniciar sesión</a>
-                    <a class="btn btn-primario  ms-auto" href="{{ path('app_register') }}">Registrarse</a>
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a class="btn btn-primario" href="{{ path('app_logout') }}">Cerrar sesión</a>
+                    {% else %}
+                        <a class="btn btn-primario" href="{{ path('app_login') }}">Iniciar sesión</a>
+                        <a class="btn btn-primario  ms-auto" href="{{ path('app_register') }}">Registrarse</a>
+                    {% endif %}
                 </div>
             </div>
         </nav>
 
         <!-- Offcanvas Sidebar -->
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
+        <div class="offcanvas offcanvas-start offcanvas-primario" tabindex="-1" id="offcanvasSidebar" aria-labelledby="offcanvasSidebarLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasSidebarLabel">Menú</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <h5 class="offcanvas-title titulo-primario" id="offcanvasSidebarLabel">Menú</h5>
+                <a data-bs-dismiss="offcanvas"><i class="bi bi-arrow-bar-left icono-primario"></i></a>
             </div>
             <div class="offcanvas-body">
                 <!-- Enlaces de navegación dentro del sidebar -->
                 <ul class="nav flex-column">
+                    
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ path('app_home_index') }}">Inicio</a>
+                        <a class="nav-link active enlace-primario" aria-current="page" href="{{ path('app_home_index') }}">Inicio <i class="bi bi-house-fill"></i></a>
                     </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link active" aria-current="page" href="{{ path('nuevaMedia') }}">Nueva Media</a>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li class="list-group-item">
+                        <a href="#" class="nav-link active enlace-primario" data-bs-toggle="collapse" data-bs-target="#submenu1" aria-expanded="false" aria-controls="submenu1">
+                            Gestión <i class="bi bi-chevron-down"></i>
+                        </a>
+                        <ul class="collapse mt-2" id="submenu1">
+                            <li class="list-group-item">
+                                <a href="{{ path('nuevaMedia') }}" class="nav-link active enlace-primario">
+                                    Nueva Media <i class="bi bi-plus"></i>
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{ path('nuevoTipoAporte') }}" class="nav-link active enlace-primario">
+                                    Nuevo Tipo de Aporte <i class="bi bi-plus"></i>
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{ path('nuevoTipoMedia') }}" class="nav-link active enlace-primario">
+                                    Nuevo Tipo de Media <i class="bi bi-plus"></i>
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{ path('nuevoGenero') }}" class="nav-link active enlace-primario">
+                                    Nuevo Género <i class="bi bi-plus"></i>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link active" aria-current="page" href="{{ path('nuevoTipoAporte') }}">Nuevo Tipo de Aporte</a>
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link active" aria-current="page" href="{{ path('nuevoTipoMedia') }}">Nuevo Tipo de Media</a>
-                    </li>
-                    <li class="nav-item"> 
-                        <a class="nav-link active" aria-current="page" href="{{ path('nuevoGenero') }}">Nuevo Genero</a>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link enlace-primario" href="#">Acerca de</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Acerca de</a>
+                        <a class="nav-link enlace-primario" href="#">Servicios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Servicios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contacto</a>
+                        <a class="nav-link enlace-primario" href="#">Contacto</a>
                     </li>
                 </ul>
             </div>

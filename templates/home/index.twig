@@ -6,4 +6,22 @@
 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     <p>Email: {{ app.user.email }}</p>
 {% endif %}
+
+<h4>Últimas medias añadidas</h4>
+<div class="offset-1 col-10">
+    <div class="row">
+    {% for media in medias %}
+        <div class="col-2">
+            <div class="row obj obj-{{media.idTipoMedia}}">
+
+                <div class="col-12"><img class="img-ficha" src = {{media.urlImagen}}></img></div>
+                <div class="col-12"><h5>{{ media.titulo }}</h5></div>
+
+            </div>
+        </div>
+
+        
+    {% endfor %}
+    </div>
+</div>
 {% endblock %}

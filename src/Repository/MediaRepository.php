@@ -43,6 +43,15 @@ class MediaRepository extends ServiceEntityRepository
             ->getFirstResult()[0]
         ;
     }
+
+    public function findUltimas10()
+    {
+       return $this->createQueryBuilder('media')
+            ->orderBy('media.id', 'ASC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
     //    /**
     //     * @return Media[] Returns an array of Media objects
     //     */

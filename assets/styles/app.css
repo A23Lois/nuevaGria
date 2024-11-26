@@ -11,9 +11,27 @@ body {
   color: white;
 }
 
+.titulo-primario {
+  color: #00a0c4 !important;
+}
+
+.icono-primario {
+  color: #00a0c4 !important;
+  font-size: 40px;
+}
+
 .navbar-primario {
-  background-color: white;
+  background-color: rgb(26, 26, 26);
   border-bottom: 1px solid rgb(206, 206, 206);
+  cursor: pointer;
+}
+
+.offcanvas-primario {
+  background-color: rgb(26, 26, 26);
+}
+
+.enlace-primario {
+  color: #00a0c4 !important;
 }
 
 .navbar-toggler-icon {
@@ -27,4 +45,31 @@ body {
   margin-bottom: 30px;
   border: rgb(228, 228, 228) solid 1px;
   padding: 50px;
+}
+
+.obj {
+  margin-left: 20px;
+  background-color: white;
+  border: rgb(228, 228, 228) solid 1px;
+}
+
+.obj-1 {
+  border-left: #0f9a21 solid 5px;
+}
+
+.obj-2 {
+  border-left: #0f809a solid 5px;
+}
+
+.obj-3 {
+  border-left: #c5136c solid 5px;
+}
+
+.obj-4 {
+  border-left: #e27b05 solid 5px;
+}
+
+.img-ficha {
+  width: 100%;
+  aspect-ratio: 16/20;
 }
