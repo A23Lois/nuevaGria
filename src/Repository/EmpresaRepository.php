@@ -33,7 +33,7 @@ class EmpresaRepository extends ServiceEntityRepository
             ->orderBy('empresa.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getFirstResult()[0]
+            ->getOneOrNullResult();
         ;
     }
     //    /**

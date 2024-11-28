@@ -38,6 +38,8 @@ use App\Form\PersonaFormType;
 use App\Controller\GestionApiController;
 use App\Service\OmdbApiClient;
 use App\Service\OpenLibrarySrv;
+use App\Service\OpenAiClient;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Attribute\Route;
@@ -302,5 +304,18 @@ public function __construct(private GestionApiController $gestionApiController)
         return $this->render('book/index.html.twig', [
             'books' => $allBooks,
         ]);
+    }
+
+    #[Route('/gestion/gpt/generate', name: 'apiGpt')]
+    public function generate(OpenAiClient $openAiClient): JsonResponse
+    {
+        $prompt = 'di hola';
+
+        try {
+            $response = $openAiClient->generateText($prompt);
+            return new JsonResponse($response);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => $e->getMessage()], 500);
+        }
     }
 }

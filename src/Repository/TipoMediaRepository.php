@@ -33,7 +33,7 @@ class TipoMediaRepository extends ServiceEntityRepository
             ->orderBy('tipoMedia.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getFirstResult()[0]
+            ->getOneOrNullResult();
         ;
     }
 

@@ -32,16 +32,15 @@ class MediaRepository extends ServiceEntityRepository
         }
     }
 
-    public function getById($id): Media
+    public function getById($id)
     {
        return $this->createQueryBuilder('media')
            ->andWhere('media.id = :id')
             ->setParameter('id', $id)
             ->orderBy('media.id', 'ASC')
-            ->setMaxResults(10)
+            ->setMaxResults(1)
             ->getQuery()
-            ->getFirstResult()[0]
-        ;
+            ->getOneOrNullResult();
     }
 
     public function findUltimas10()
@@ -49,6 +48,16 @@ class MediaRepository extends ServiceEntityRepository
        return $this->createQueryBuilder('media')
             ->orderBy('media.id', 'ASC')
             ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByTitulo(string $titulo)
+    {
+       return $this->createQueryBuilder('media')
+            ->andWhere('media.titulo like :titulo or media.tituloOriginal like :titulo')
+            ->setParameter('titulo', '%'.$titulo.'%')
+            ->orderBy('media.id', 'ASC')
             ->getQuery()
             ->getResult();
     }

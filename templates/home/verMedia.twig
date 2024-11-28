@@ -1,0 +1,20 @@
+{% extends 'base.twig' %} 
+{% block title %}
+     {{ parent() }} | {{ media.Titulo }}
+{% endblock %}
+{% block body %}
+    <div class="offset-2 mt-2 col-8">
+        <div class="row obj obj-{{media.idTipoMedia}}">
+
+            <div class="col-2"><img class="img-ficha" src = {{media.urlImagen}}></img></div>
+            <div class="col-10">
+                <h5 class="titulo-{{ tipoMedia.tipoMedia|lower }}">{{ media.titulo }}</h5>
+                <p>{{ media.tituloOriginal }}</p>
+                <div>{{ media.descripcion }}</div>
+                <br>
+                <br>
+                <p class="titulo-{{ tipoMedia.tipoMedia|lower }}"> {{ tipoMedia.tipoMedia }} </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

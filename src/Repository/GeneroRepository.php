@@ -33,7 +33,7 @@ class GeneroRepository extends ServiceEntityRepository
             ->orderBy('genero.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getFirstResult()[0]
+            ->getOneOrNullResult();
         ;
     }
     //    /**

@@ -11,10 +11,25 @@ body {
   color: white;
 }
 
+.titulo-pelicula {
+  color: #c5136c !important;
+}
+
+.titulo-serie {
+  color: #0f809a !important;
+}
+
 .titulo-primario {
   color: #00a0c4 !important;
 }
 
+.titulo-primario {
+  color: #00a0c4 !important;
+}
+
+.titulo-primario {
+  color: #00a0c4 !important;
+}
 .icono-primario {
   color: #00a0c4 !important;
   font-size: 40px;

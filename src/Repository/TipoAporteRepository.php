@@ -33,7 +33,7 @@ class TipoAporteRepository extends ServiceEntityRepository
             ->orderBy('tipoAporte.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getResult()[0]
+            ->getOneOrNullResult();
         ;
     }
     //    /**

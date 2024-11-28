@@ -33,7 +33,7 @@ class PersonaRepository extends ServiceEntityRepository
             ->orderBy('persona.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
-            ->getFirstResult()[0]
+            ->getOneOrNullResult();
         ;
     }
     //    /**

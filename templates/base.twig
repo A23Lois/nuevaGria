@@ -148,7 +148,7 @@
     const barraBusqNav =  document.getElementById("buscador");
 
     barraBusqNav.addEventListener("input",(event)=>{
-        let texto = "{{path('buscar',{nombre:'busqueda'})}}";
+        let texto = "{{path('buscar',{titulo:'busqueda'})}}";
         texto = texto.replace('busqueda',event.target.value);
         botonNav.href = texto;
     });
