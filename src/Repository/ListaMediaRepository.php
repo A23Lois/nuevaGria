@@ -16,6 +16,25 @@ class ListaMediaRepository extends ServiceEntityRepository
         parent::__construct($registry, ListaMedia::class);
     }
 
+    public function add(ListaMedia $lista, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($lista);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function findByUsuario(int $idUsuario)
+    {
+       return $this->createQueryBuilder('listaMedia')
+           ->andWhere('listaMedia.idUsuario = :idUsuario')
+            ->setParameter('idUsuario', $idUsuario)
+            ->orderBy('listaMedia.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return ListaMedia[] Returns an array of ListaMedia objects
     //     */

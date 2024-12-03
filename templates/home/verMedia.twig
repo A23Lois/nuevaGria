@@ -14,6 +14,12 @@
                 <br>
                 <br>
                 <p class="titulo-{{ tipoMedia.tipoMedia|lower }}"> {{ tipoMedia.tipoMedia }} </p>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('editarMedia', { id: media.id })}}" class="btn btn-primario">Editar datos</a>
+                {% endif %}
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <a href="{{ path('guardarMedia', { idMedia: media.id, idUsuario: app.user.id })}}" class="btn btn-primario"> Añadir a mi lista</a>
+                {% endif %}
             </div>
         </div>
     </div>

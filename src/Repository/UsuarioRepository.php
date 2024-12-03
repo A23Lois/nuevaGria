@@ -34,6 +34,18 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
         
     }
 
+
+    public function getByCorreo($correo): Usuario
+    {
+       return $this->createQueryBuilder('usuario')
+           ->andWhere('usuario.email = :email')
+            ->setParameter('email', $correo)
+            ->orderBy('usuario.email', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+        ;
+    }
     //    /**
     //     * @return Usuario[] Returns an array of Usuario objects
     //     */

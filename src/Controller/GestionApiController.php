@@ -65,4 +65,5 @@ class GestionApiController extends AbstractController
         $this->addFlash('success', 'Se ha añadido correctamente la persona.');
         return $this->redirectToRoute('listaPersonas');
     }
+
 }

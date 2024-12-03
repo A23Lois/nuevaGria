@@ -20,6 +20,7 @@ class OmdbApiClient
             'query' => [
                 'apikey' => $this->apiKey,
                 't' => $title, // Nombre de la película
+                'lang' => "es"
             ],
         ]);
 
