@@ -41,6 +41,9 @@ body {
   cursor: pointer;
 }
 
+i {
+  cursor: pointer;
+}
 .offcanvas-primario {
   background-color: rgb(26, 26, 26);
 }
@@ -86,5 +89,9 @@ body {
 
 .img-ficha {
   width: 100%;
+  aspect-ratio: 16/20;
+}
+.img-ficha-md {
+  width: 50%;
   aspect-ratio: 16/20;
 }

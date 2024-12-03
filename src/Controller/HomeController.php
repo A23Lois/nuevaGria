@@ -44,23 +44,45 @@ class HomeController extends AbstractController
 
     #[Route('/ver/media/{id}', name:'verMedia')]
     public function verMedia(int $id)
-    {
+    {   
+        $esAnadido = false;
         $media = $this->repoMedia->getById($id);
         $tipoMedia = $this->repoTipoMedia->getById($media->getIdTipoMedia());
+        $usuarioLoggeado = $this->getUser();
+        if($usuarioLoggeado != null){
+            $correo = $usuarioLoggeado->getUserIdentifier();
+            $usuario = $this->repoUsuario->getByCorreo($correo);
+            $listaMedia = $this->repoListaMedia->getByUsuarioMedia($usuario->getId(), $id);
+            if($listaMedia != null)
+            {
+                $esAnadido = true;
+            }
+        }
         
         return $this->render('home/verMedia.twig', [
             'media' => $media,
-            'tipoMedia' => $tipoMedia
+            'tipoMedia' => $tipoMedia,
+            'esAnadido' => $esAnadido
         ]);
     }
 
-    #[Route('/usuario/miPerfil', name:'UsuarioPerfil')]
+    #[Route('/usuario/perfil', name:'UsuarioPerfil')]
     public function verPerfilUsuario()
     {
         $correo = $this->getUser()->getUserIdentifier();
         $usuario = $this->repoUsuario->getByCorreo($correo);
         $listaMedias = $this->repoListaMedia->findByUsuario($usuario->getId());
-        dd($listaMedias);
+        $medias = [];
+        foreach ($listaMedias as $listaMedia)
+        {
+            $media = $this->repoMedia->getById($listaMedia->getIdMedia());
+            $medias[$media->getId()] = $media;
+        }
+        
+        return $this->render('usuario/perfil.twig', [
+            'medias' => $medias,
+            'listaMedias' => $listaMedias,
+        ]);
     }
     
 }

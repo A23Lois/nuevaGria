@@ -32,7 +32,7 @@
                 <!-- Botón de inicio de sesión alineado a la derecha -->
                 <div class=" ms-auto">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        <span class="titulo-primario">{{ app.user.usuario }}</span>
+                        <a href="{{ path('UsuarioPerfil') }}" class="text-decoration-none text-reset titulo-primario">{{ app.user.usuario }}</a>
                         <a class="btn btn-primario" href="{{ path('app_logout') }}">Cerrar sesión</a>
                     {% else %}
                         <a class="btn btn-primario" href="{{ path('app_login') }}">Iniciar sesión</a>

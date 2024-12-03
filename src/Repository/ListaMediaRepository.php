@@ -35,6 +35,18 @@ class ListaMediaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getByUsuarioMedia(int $idUsuario, int $idMedia)
+    {
+       return $this->createQueryBuilder('listaMedia')
+           ->andWhere('listaMedia.idUsuario = :idUsuario and listaMedia.idMedia = :idMedia')
+            ->setParameter('idUsuario', $idUsuario)
+            ->setParameter('idMedia', $idMedia)
+            ->orderBy('listaMedia.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return ListaMedia[] Returns an array of ListaMedia objects
     //     */
