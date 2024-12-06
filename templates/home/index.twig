@@ -11,8 +11,8 @@
         <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <a href="{{ path('verMedia', { id: media.id })}}" class="text-decoration-none text-reset">
                 <div class="row obj obj-home obj-{{media.idTipoMedia}}">
-                    <div class="col-12"><img class="img-ficha" src = {{media.urlImagen}}></img></div>
-                    <div class="col-12"><h5>{{ media.titulo }}</h5></div>
+                    <div class="offset-1 col-10"><img class="img-ficha" src = {{media.urlImagen}}></img></div>
+                    <div class="col-12"><h5 class="text-center">{{ media.titulo }}</h5></div>
                 </div>
             </a>  
         </div>
