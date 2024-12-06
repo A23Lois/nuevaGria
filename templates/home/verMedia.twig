@@ -8,7 +8,7 @@
 
             <div class="col-2"><img class="img-ficha" src = {{media.urlImagen}}></img></div>
             <div class="col-10">
-                <h5 class="titulo-{{ tipoMedia.tipoMedia|lower }}">{{ media.titulo }}</h5>
+                <h2 class="titulo-{{ tipoMedia.tipoMedia|lower }}">{{ media.titulo }}</h2>
                 <p>{{ media.tituloOriginal }}</p>
                 <div>{{ media.descripcion }}</div>
                 <br>
@@ -18,13 +18,24 @@
                     <a href="{{ path('editarMedia', { id: media.id })}}" class="btn btn-primario">Editar datos</a>
                 {% endif %}
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                        {% if esAnadido == false %}
-                            <a href="{{ path('guardarMedia', { idMedia: media.id, idUsuario: app.user.id })}}" class="btn btn-primario"> Añadir a mi lista</a>
-                        {% else %}
-                            <a href="{{ path('guardarMedia', { idMedia: media.id, idUsuario: app.user.id })}}" class="btn btn-danger"> Eliminar de mi lista</a> <!--Queda pendiente hacer la funcion de eliminado-->
-                        {% endif %}
+                    {% if esAnadido == false %}
+                        <a href="{{ path('guardarMedia', { idMedia: media.id, idUsuario: app.user.id })}}" class="btn btn-primario"> Añadir a mi lista</a>
+                    {% else %}
+                        <a href="{{ path('eliminarMedia', { idMedia: media.id, idUsuario: app.user.id })}}" class="btn btn-danger"> Eliminar de mi lista</a>
+                    {% endif %}
+                    <a class="btn btn-primario" id="btnComentar">Comentar</a>
                 {% endif %}
             </div>
         </div>
+        <div class="row obj mt-2">
+            <h2 class="text-center">Comentarios</h2>
+            {% for comentarioLista in comentarios %}
+                
+            {% endfor %}
+        </div>
     </div>
 {% endblock %}
+<script>
+    
+
+</script>

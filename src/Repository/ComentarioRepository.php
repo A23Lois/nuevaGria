@@ -16,6 +16,58 @@ class ComentarioRepository extends ServiceEntityRepository
         parent::__construct($registry, Comentario::class);
     }
 
+    public function delete(int $id): void
+    {
+        $comentario = $this->getById($id);
+        $entityManager = $this->getEntityManager();
+
+        if ($comentario) {
+            $entityManager->remove($comentario);
+            $entityManager->flush();
+        }
+    }
+
+    public function add(Comentario $comentario, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($comentario);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    
+    public function findByUsuario(int $idUsuario)
+    {
+       return $this->createQueryBuilder('comentario')
+           ->andWhere('comentario.idUsuario = :idUsuario')
+            ->setParameter('idUsuario', $idUsuario)
+            ->orderBy('comentario.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByMedia(int $idMedia)
+    {
+       return $this->createQueryBuilder('comentario')
+           ->andWhere('comentario.idMedia = :idMedia')
+            ->setParameter('idMedia', $idMedia)
+            ->orderBy('comentario.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getByUsuarioMedia(int $idUsuario, int $idMedia)
+    {
+       return $this->createQueryBuilder('comentario')
+           ->andWhere('comentario.idUsuario = :idUsuario and comentario.idMedia = :idMedia')
+            ->setParameter('idUsuario', $idUsuario)
+            ->setParameter('idMedia', $idMedia)
+            ->orderBy('comentario.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
     //    /**
     //     * @return Comentario[] Returns an array of Comentario objects
     //     */

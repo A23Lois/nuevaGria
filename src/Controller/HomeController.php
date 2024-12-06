@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Media;
 use App\Entity\Usuario;
+use App\Repository\ComentarioRepository;
 use App\Repository\ListaMediaRepository;
 use App\Repository\MediaRepository;
 use App\Repository\TipoMediaRepository;
@@ -12,7 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
-    public function __construct(private MediaRepository $repoMedia, private TipoMediaRepository $repoTipoMedia, private UsuarioRepository $repoUsuario, private ListaMediaRepository $repoListaMedia)
+    public function __construct(private MediaRepository $repoMedia, private TipoMediaRepository $repoTipoMedia, private UsuarioRepository $repoUsuario, private ListaMediaRepository $repoListaMedia, private ComentarioRepository $repoComentario)
     {
         
     }
@@ -22,6 +23,14 @@ class HomeController extends AbstractController
     {
         return $this->render('home/index.twig',[
             'medias' => $this->repoMedia->findUltimas10()
+        ]);
+    }
+
+    #[Route('/error/{exception}', name:'error')]
+    public function error(string $exception)
+    {
+        return $this->render('home/error.twig',[
+            'exception' => $exception
         ]);
     }
 
@@ -46,6 +55,7 @@ class HomeController extends AbstractController
     public function verMedia(int $id)
     {   
         $esAnadido = false;
+        $esComentado = false;
         $media = $this->repoMedia->getById($id);
         $tipoMedia = $this->repoTipoMedia->getById($media->getIdTipoMedia());
         $usuarioLoggeado = $this->getUser();
@@ -53,16 +63,25 @@ class HomeController extends AbstractController
             $correo = $usuarioLoggeado->getUserIdentifier();
             $usuario = $this->repoUsuario->getByCorreo($correo);
             $listaMedia = $this->repoListaMedia->getByUsuarioMedia($usuario->getId(), $id);
+            $comentarios = $this->repoComentario->findByMedia($id);
+            $comentario = $this->repoComentario->getByUsuarioMedia($usuario->getId(), $id);
             if($listaMedia != null)
             {
                 $esAnadido = true;
+            }
+            if($comentario != null)
+            {
+                $esComentado = true;
             }
         }
         
         return $this->render('home/verMedia.twig', [
             'media' => $media,
             'tipoMedia' => $tipoMedia,
-            'esAnadido' => $esAnadido
+            'esAnadido' => $esAnadido,
+            'comentarios' => $comentarios,
+            'comentario' => $comentario,
+            'esComentado' => $esComentado,
         ]);
     }
 

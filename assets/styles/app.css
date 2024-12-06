@@ -69,6 +69,7 @@ i {
   margin-left: 20px;
   background-color: white;
   border: rgb(228, 228, 228) solid 1px;
+  padding-bottom: 20px;
 }
 
 .obj-1 {
@@ -94,4 +95,8 @@ i {
 .img-ficha-md {
   width: 50%;
   aspect-ratio: 16/20;
+}
+
+.texto-error {
+  color: #860000;
 }

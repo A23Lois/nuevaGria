@@ -16,6 +16,17 @@ class ListaMediaRepository extends ServiceEntityRepository
         parent::__construct($registry, ListaMedia::class);
     }
 
+    public function delete(int $id): void
+    {
+        $listaMedia = $this->getById($id);
+        $entityManager = $this->getEntityManager();
+
+        if ($listaMedia) {
+            $entityManager->remove($listaMedia);
+            $entityManager->flush();
+        }
+    }
+
     public function add(ListaMedia $lista, bool $flush = false): void
     {
         $this->getEntityManager()->persist($lista);
@@ -23,6 +34,17 @@ class ListaMediaRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function getById($id)
+    {
+       return $this->createQueryBuilder('listaMedia')
+           ->andWhere('listaMedia.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('listaMedia.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     public function findByUsuario(int $idUsuario)
