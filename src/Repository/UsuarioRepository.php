@@ -34,6 +34,17 @@ class UsuarioRepository extends ServiceEntityRepository implements PasswordUpgra
         
     }
 
+    public function getById($id): Usuario
+    {
+       return $this->createQueryBuilder('usuario')
+           ->andWhere('usuario.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('usuario.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+        ;
+    }
 
     public function getByCorreo($correo): Usuario
     {

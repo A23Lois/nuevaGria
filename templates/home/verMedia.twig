@@ -3,7 +3,7 @@
      {{ parent() }} | {{ media.Titulo }}
 {% endblock %}
 {% block body %}
-    <div class="offset-2 mt-2 col-8">
+    <div class="col-12 offset-lg-2 mt-2 col-lg-8">
         <div class="row obj obj-{{media.idTipoMedia}}">
 
             <div class="col-2"><img class="img-ficha" src = {{media.urlImagen}}></img></div>
@@ -19,23 +19,94 @@
                 {% endif %}
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     {% if esAnadido == false %}
-                        <a href="{{ path('guardarMedia', { idMedia: media.id, idUsuario: app.user.id })}}" class="btn btn-primario"> Añadir a mi lista</a>
+                        <a href="{{ path('guardarMedia', { idMedia: media.id, idUsuario: app.user.id })}}" class="btn btn-primario" id="btnGuardarListaMedia"> Añadir a mi lista</a>
                     {% else %}
-                        <a href="{{ path('eliminarMedia', { idMedia: media.id, idUsuario: app.user.id })}}" class="btn btn-danger"> Eliminar de mi lista</a>
+                        <a href="{{ path('eliminarMedia', { idMedia: media.id, idUsuario: app.user.id })}}" class="btn btn-danger" id="btnEliminarListaMedia"> Eliminar de mi lista</a>
                     {% endif %}
+                    {% if esComentado == false %}
                     <a class="btn btn-primario" id="btnComentar">Comentar</a>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>
+        <div class="row obj mt-2" id="objMiComentario">
+            <h2 class="text-center">Mi comentario</h2>
+            <form id="frmComentario">
+                <textarea id="miComentario" rows="4" cols="50" maxlength="3000" class="form-control">{% if comentario != null %}{{  comentario.comentario }}{% endif %}</textarea>
+                <div class="d-flex justify-content-end mt-2">
+                    <a class="btn btn-primario" id="btnGuardarComentario">Guardar</a>
+                </div>
+            </form>
+            {% if comentario != null %}
+                <div id="divComentario">{{ comentario.comentario }}</div>
+                <div class="d-flex justify-content-end mt-2">
+                    <a class="btn btn-primario" id="btnComentar">Editar</a>
+                </div>
+            {% endif %}
+        </div>
+
         <div class="row obj mt-2">
             <h2 class="text-center">Comentarios</h2>
-            {% for comentarioLista in comentarios %}
-                
-            {% endfor %}
+            <div class="col-12">
+                {% for comentarioLista in comentarios %}
+
+                    {% if comentario == null or comentarioLista.id != comentario.id %}
+                        <div class="row mt-2">
+                            <div class="col-2 text-end"> {{usuarios[comentarioLista.id]}}</div>
+                            <div class="comentario col-8"> {{comentarioLista.comentario}} </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}
+{% block scripts %}
 <script>
-    
+    $(document).ready(function() {
+        if ("{{ esComentado }}"){
+            $("#frmComentario").hide();
+        }
+        else{
+            $("#objMiComentario").hide();
+        }
 
+        $("#btnComentar").click(function (){
+            $("#btnComentar").hide();
+            $("#objMiComentario").show();
+            $("#frmComentario").show();
+            $("#divComentario").hide();
+        });
+
+        "{% if is_granted('IS_AUTHENTICATED_FULLY') %}";
+        $("#btnGuardarComentario").click(function (){
+            $.ajax({
+                url: '{{ path("guardarComentario") }}',
+                type: 'POST',
+                data: { 
+                    idMedia: '{{ media.id }}', 
+                    idUsuario: '{{ app.user.id }}',
+                    textoComentario: $("#miComentario").val()
+                },
+                success: function(response) {
+                    // Manejar la respuesta exitosa
+                    if (response.status === 'success') {
+                        alert('Comentario guardado con exito');
+                    } else {
+                        alert('Error al guardar comentario');
+                    }
+                    $("#frmComentario").hide();
+                    $("#divComentario").text($("#miComentario").val());
+                    $("#divComentario").show();
+                    $("#btnComentar").show();
+                },
+                error: function(xhr, status, error) {
+                    // Manejar errores de la solicitud
+                    alert('Error: ' + error);
+                }
+            });
+        });
+        "{% endif %}";
+    });
 </script>
+{% endblock %}

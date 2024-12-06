@@ -57,14 +57,24 @@ class HomeController extends AbstractController
         $esAnadido = false;
         $esComentado = false;
         $media = $this->repoMedia->getById($id);
+        $comentarios = $this->repoComentario->findByMedia($id);
+        $diccionarioUsuarios = [];
         $tipoMedia = $this->repoTipoMedia->getById($media->getIdTipoMedia());
+        $comentario = null;
         $usuarioLoggeado = $this->getUser();
+
+        foreach ($comentarios as $comentarioLista)
+        {
+            $usuarioComentario = $this->repoUsuario->getById($comentarioLista->getIdUsuario());
+            $diccionarioUsuarios[$comentarioLista->getId()] = $usuarioComentario->getUsuario();
+        }
+
         if($usuarioLoggeado != null){
             $correo = $usuarioLoggeado->getUserIdentifier();
             $usuario = $this->repoUsuario->getByCorreo($correo);
             $listaMedia = $this->repoListaMedia->getByUsuarioMedia($usuario->getId(), $id);
-            $comentarios = $this->repoComentario->findByMedia($id);
             $comentario = $this->repoComentario->getByUsuarioMedia($usuario->getId(), $id);
+
             if($listaMedia != null)
             {
                 $esAnadido = true;
@@ -82,6 +92,7 @@ class HomeController extends AbstractController
             'comentarios' => $comentarios,
             'comentario' => $comentario,
             'esComentado' => $esComentado,
+            'usuarios' => $diccionarioUsuarios
         ]);
     }
 

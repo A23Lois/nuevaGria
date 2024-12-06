@@ -2,16 +2,15 @@
 {% block title %} {{ parent() }} | Incio
 {% endblock %}
 {% block body %}
-<h1>BIENVENIDO!</h1>
 
-<h4>Últimas medias añadidas</h4>
+<h3 class="titulo-primario">Novedades!</h3>
 <div class="offset-1 col-10">
     <div class="row">
     {% for media in medias %}
 
-        <div class="col-2">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
             <a href="{{ path('verMedia', { id: media.id })}}" class="text-decoration-none text-reset">
-                <div class="row obj obj-{{media.idTipoMedia}}">
+                <div class="row obj obj-home obj-{{media.idTipoMedia}}">
                     <div class="col-12"><img class="img-ficha" src = {{media.urlImagen}}></img></div>
                     <div class="col-12"><h5>{{ media.titulo }}</h5></div>
                 </div>

@@ -36,6 +36,15 @@ class ComentarioRepository extends ServiceEntityRepository
         }
     }
 
+    public function update(Comentario $comentario, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($comentario);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
     
     public function findByUsuario(int $idUsuario)
     {

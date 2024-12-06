@@ -1,5 +1,5 @@
 body {
-  background-color: whitesmoke;
+  background-color: rgb(225, 233, 235);
 }
 .btn-primario {
   background-color: #00a0c4;
@@ -7,6 +7,11 @@ body {
 }
 
 .btn-primario:hover {
+  background: #0f809a;
+  color: white;
+}
+
+.btn-primario:active {
   background: #0f809a;
   color: white;
 }
@@ -56,6 +61,11 @@ i {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-width='4' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
+.comentario {
+  border: rgb(228, 228, 228) solid 1px;
+  border-radius: 5px;
+}
+
 .ficha {
   background-color: white;
   border-radius: 20px;
@@ -65,8 +75,11 @@ i {
   padding: 50px;
 }
 
-.obj {
+.obj-home {
   margin-left: 20px;
+}
+
+.obj {
   background-color: white;
   border: rgb(228, 228, 228) solid 1px;
   padding-bottom: 20px;
