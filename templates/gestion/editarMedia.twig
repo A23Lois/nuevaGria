@@ -3,8 +3,40 @@
 {% endblock %}
 {% block body %}
 <div class="row">
+    {% if id == 0 %}
     <div class="col-10 offset-1 ficha">
+        <h2 class="titulo-primario">Añadir via api</h2>
+        <label for="tituloAdd">Titulo a añadir</label>
+        <div class="input-group">
+        
+        <input type="text" class="form-control" id="tituloAdd"><a class="btn btn-primario" id="btnAddApi">Añadir</a>
+        </div>
+    </div>
+    {% endif %}
+    <div class="col-10 offset-1 ficha">
+            {% if id == 0 %}
+                <h2 class="titulo-primario">Añadir manualmente</h2>
+            {% else %}
+            <div class="row">
+                <div class="col-6">
+                    <h2 class="titulo-primario">Editar información</h2>
+                </div>
+                <div class="col-6 text-end">
+                    <a class="btn btn-danger" id="btnEliminarMedia" href="{{ path('eliminarMediaDB', {id : id }) }}">Eliminar</a>
+                </div>
+            </div>
+            {% endif %}
         {{ form(form)}}
+
     </div>
 </div>
+{% endblock %}
+{% block scripts %}
+<script>
+    $("#btnAddApi").click(function (){
+        let enlace = "{{path('apiSeriePelicula',{titulo:'busqueda'})}}";
+        enlace = enlace.replace('busqueda',$("#tituloAdd").val());
+        window.open(enlace, '_self');
+    });
+</script>
 {% endblock %}

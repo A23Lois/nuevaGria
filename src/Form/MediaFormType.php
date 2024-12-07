@@ -64,7 +64,6 @@ class MediaFormType extends AbstractType
         $builder->add('fechaEstreno', DateType::class, [
             'widget' => 'choice',
             'years' => range(1950, date('Y')),
-            'data' => new \DateTime(),
             'format' => 'ddMMyyyy',])
         ->add('guardar', SubmitType::class,['attr' => ['class' => 'btn btn-primario mt-2']]);
         return $builder;

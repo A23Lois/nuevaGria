@@ -39,6 +39,7 @@ use App\Controller\GestionApiController;
 use App\Service\OmdbApiClient;
 use App\Service\OpenLibrarySrv;
 use App\Service\OpenAiClient;
+use DateTime;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -208,27 +209,30 @@ public function __construct(private GestionApiController $gestionApiController)
         //--------------NUEVO
     #[Route('/gestion/nuevaMedia', name:'nuevaMedia')]
     public function nuevaMedia(MediaRepository $repo, Request $request){
-        $genero = new Media();
-        $form = $this->createForm(MediaFormType::class, $genero);
+        $media = new Media();
+        $form = $this->createForm(MediaFormType::class, $media);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $post = $form->getData();
             return $this->gestionApiController->guardarMedia($repo, $post);
         }
-        return $this->render('gestion/editarMedia.twig',['form' => $form]);
+        return $this->render('gestion/editarMedia.twig',['form' => $form, 'id' => 0]);
     }
         //--------------EDITAR
     #[Route('/gestion/editarMedia/{id}', name:'editarMedia')]
     public function editarMedia(MediaRepository $repo, Request $request, int $id)
     {
-        $genero = $repo->getById($id);
-        $form = $this->createForm(MediaFormType::class, $genero);
+        $media = $repo->getById($id);
+        $form = $this->createForm(MediaFormType::class, $media);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $post = $form->getData();
             return $this->gestionApiController->guardarMedia($repo, $post);
         }
-        return $this->render('gestion/editarMedia.twig',['form' => $form]);
+        return $this->render('gestion/editarMedia.twig',[
+            'form' => $form,
+             'id' => $id
+            ]);
     }
     //--------------EMPRESA
         //--------------NUEVO
@@ -281,11 +285,39 @@ public function __construct(private GestionApiController $gestionApiController)
         return $this->render('gestion/editarPersona.twig',['form' => $form]);
     }
 //-------------API
-    #[Route('/gestion/api/pelicula/{titulo}', name:'apiPelicula')]
-    public function cargarPelicula(string $titulo, OmdbApiClient $api)
+    #[Route('/gestion/api/seriePelicula/{titulo}', name:'apiSeriePelicula')]
+    public function cargarSeriePelicula(MediaRepository $repo, string $titulo, OmdbApiClient $api)
     {
-        $datos = $api->fetchMovie($titulo);
-        dd($datos);
+        $datos = $api->fetchMovieSeries($titulo);
+        if($datos['Response'] == 'True')
+        {
+            $media = new Media();
+            $media->setTitulo($datos['Title']);
+            $media->setTituloOriginal($datos['Title']);
+            if($datos['Released'] != "N/A")
+            {
+                $media->setFechaEstreno(new DateTime($datos['Released']));
+            }
+            if($datos['Type'] == 'movie')
+            {
+                $media->setIdTipoMedia(3);
+            }
+            else if ($datos['Type'] == 'series')
+            {
+                $media->setIdTipoMedia(2);
+            }
+            else
+            {
+                return $this->redirectToRoute('app_home_index');
+            }
+            $media->setDescripcion($datos['Plot']);
+            $media->setUrlImagen($datos['Poster']);
+            return $this->gestionApiController->guardarMedia($repo, $media);
+        }
+        else
+        {
+            return $this->redirectToRoute('nuevaMedia');
+        }
     }
 
     #[Route('gestion/api/libros', name: 'apiLibros')]

@@ -14,7 +14,7 @@ class OmdbApiClient
         $this->apiKey = $apiKey;
     }
 
-    public function fetchMovie(string $title): array
+    public function fetchMovieSeries(string $title): array
     {
         $response = $this->httpClient->request('GET', 'http://www.omdbapi.com/', [
             'query' => [

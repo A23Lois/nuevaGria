@@ -14,6 +14,7 @@ use App\Repository\ComentarioRepository;
 use App\Repository\GeneroMediaRepository;
 use App\Repository\ListaMediaRepository;
 use App\Repository\UsuarioRepository;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GestionApiController extends AbstractController
@@ -49,7 +50,15 @@ class GestionApiController extends AbstractController
     {
         $repo->add($post, true);
         $this->addFlash('success', 'Se ha añadido correctamente la media.');
-        return $this->redirectToRoute('listaMedias');
+        return $this->redirectToRoute('nuevaMedia');
+    }
+
+    #[Route('/gestion/eliminarMedia/{id}', name:'eliminarMediaDB')]
+    public function eliminarMedia (MediaRepository $repo, $id)
+    {
+        $repo->delete($id, true);
+        $this->addFlash('success', 'Se ha eliminado correctamente la media.');
+        return $this->redirectToRoute('app_home_index');
     }
 
     public function guardarEmpresa (EmpresaRepository $repo, $post)
@@ -65,5 +74,6 @@ class GestionApiController extends AbstractController
         $this->addFlash('success', 'Se ha añadido correctamente la persona.');
         return $this->redirectToRoute('listaPersonas');
     }
+    
 
 }

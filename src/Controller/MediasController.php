@@ -20,14 +20,4 @@ class MediasController extends AbstractController
         return $this->render('series/serieprueba.twig',['serie' => $serie]);
         
     }
-
-    #[Route('pruebas/peliculaImdb/{idPelicula}', name: 'PeliculaImdbPrueba')]
-    public function mostrarPeliculaImdbPrueba(string $idPelicula, ImdbSrv $ImdbSrv)    
-    {
-        $movieDetails = $ImdbSrv->getPelicula($idPelicula);
-
-        return $this->render('peliculas/peliculaimdbprueba.twig', [
-            'movie' => $movieDetails,
-        ]);
-    }
 }

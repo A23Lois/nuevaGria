@@ -21,10 +21,13 @@
                 <br>
                 <br>
                 <p class="titulo-{{ tipoMedia.tipoMedia|lower }}"> {{ tipoMedia.tipoMedia }} </p>
+            </div>
+            <div class="col-12 text-end">
                 {% if is_granted('ROLE_ADMIN') %}
                     <a href="{{ path('editarMedia', { id: media.id })}}" class="btn btn-primario">Editar datos</a>
                 {% endif %}
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+
                     {% if esAnadido == false %}
                         <a href="{{ path('guardarMedia', { idMedia: media.id, idUsuario: app.user.id })}}" class="btn btn-primario" id="btnGuardarListaMedia"> Añadir a mi lista</a>
                     {% else %}
@@ -34,7 +37,7 @@
                     <a class="btn btn-primario" id="btnComentar">Comentar</a>
                     {% endif %}
                 {% endif %}
-            </div>
+                </div>
         </div>
         <div class="row obj mt-2" id="objMiComentario">
             <h2 class="text-center">Mi comentario</h2>
@@ -45,7 +48,12 @@
                 </div>
             </form>
             {% if comentario != null %}
-                <div id="divComentario">{{ comentario.comentario }}</div>
+                <div id="divComentario" class="comentarios col-10 offset-1">
+                    <div class="row mx-2 my-2 obj-2 comentario">
+                        <div class="col-2 text-center"></div>
+                        <div class=" col-9"> {{ comentario.comentario }} </div>
+                    </div>
+                </div>
                 <div class="d-flex justify-content-end mt-2">
                     <a class="btn btn-primario" id="btnComentar">Editar</a>
                 </div>

@@ -22,7 +22,7 @@ class HomeController extends AbstractController
     public function index()
     {
         return $this->render('home/index.twig',[
-            'medias' => $this->repoMedia->findUltimas10()
+            'medias' => $this->repoMedia->findUltimas12()
         ]);
     }
 

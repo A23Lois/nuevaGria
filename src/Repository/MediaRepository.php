@@ -16,6 +16,17 @@ class MediaRepository extends ServiceEntityRepository
         parent::__construct($registry, Media::class);
     }
 
+    public function delete(int $id): void
+    {
+        $media = $this->getById($id);
+        $entityManager = $this->getEntityManager();
+
+        if ($media) {
+            $entityManager->remove($media);
+            $entityManager->flush();
+        }
+    }
+
     public function add(Media $media, bool $flush = false): void
     {
         if($media->getIdPrecuela() == 0){
@@ -43,11 +54,11 @@ class MediaRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findUltimas10()
+    public function findUltimas12()
     {
        return $this->createQueryBuilder('media')
-            ->orderBy('media.id', 'ASC')
-            ->setMaxResults(10)
+            ->orderBy('media.id', 'DESC')
+            ->setMaxResults(12)
             ->getQuery()
             ->getResult();
     }

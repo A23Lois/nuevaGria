@@ -81,7 +81,6 @@ class HomeApiController extends AbstractController
             return $this->redirectToRoute('error', ['exception' => $exception]);
         }
     }
-    
 
     #[Route('/usuario/eliminarMedia/{idMedia}/{idUsuario}', name:'eliminarMedia')]
     public function eliminarListaMedia ($idMedia, $idUsuario)
