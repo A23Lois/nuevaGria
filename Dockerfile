@@ -60,7 +60,7 @@ RUN chown -R symfonyuser /var/www/html/
 
 USER symfonyuser
 # Instalar dependencias de Composer
-RUN composer install --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader
 
 # Cambiar los permisos de los directorios importantes
 USER root
