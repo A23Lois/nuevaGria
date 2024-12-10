@@ -15,8 +15,13 @@ RUN apt-get update && apt-get install -y \
     docker-php-ext-configure gd --with-freetype --with-jpeg && \
     docker-php-ext-install gd zip pdo pdo_mysql
     
-    
-RUN pecl install sqlsrv pdo_sqlsrv && \
+# Agregar claves e instalar Microsoft ODBC Driver sin usar apt-key
+RUN curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > /usr/share/keyrings/microsoft-archive-keyring.gpg && \
+    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/ubuntu/20.04/prod focal main" > /etc/apt/sources.list.d/mssql-release.list && \
+    apt-get update && ACCEPT_EULA=Y apt-get install -y \
+    msodbcsql18 \
+    unixodbc-dev && \
+    pecl install sqlsrv pdo_sqlsrv && \
     docker-php-ext-enable sqlsrv pdo_sqlsrv
 # Crear un usuario para evitar ejecutar como root
 RUN useradd -ms /bin/bash symfonyuser
