@@ -4,6 +4,7 @@ services:
     container_name: symfony_php
     volumes:
       - ./:/var/www/html # Ruta corregida para WSL
+    restart: always
     working_dir: /var/www/html
     networks:
       - symfony_network
@@ -14,6 +15,7 @@ services:
 
   nginx:
     image: nginx:alpine
+    restart: always
     container_name: symfony_nginx
     volumes:
       - ./:/var/www/html
