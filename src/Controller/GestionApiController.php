@@ -32,7 +32,7 @@ class GestionApiController extends AbstractController
         try{
             $repo->add($post, true);
             $this->addFlash('success', 'Se ha añadido correctamente el tipo de aporte.');
-            return $this->redirectToRoute('listaTiposAportes');
+            return $this->redirectToRoute('app_home_index');
         }catch(Exception $exception)
         {
             return $this->redirectToRoute('error', ['exception' => $exception]);
@@ -44,7 +44,7 @@ class GestionApiController extends AbstractController
         try{
             $repo->add($post, true);
             $this->addFlash('success', 'Se ha añadido correctamente el tipo de aporte.');
-            return $this->redirectToRoute('listaTiposMedias');
+            return $this->redirectToRoute('app_home_index');
         }catch(Exception $exception)
         {
             return $this->redirectToRoute('error', ['exception' => $exception]);
@@ -56,7 +56,7 @@ class GestionApiController extends AbstractController
         try{
             $repo->add($post, true);
             $this->addFlash('success', 'Se ha añadido correctamente el género.');
-            return $this->redirectToRoute('listaGeneros');
+            return $this->redirectToRoute('app_home_index');
         }catch(Exception $exception)
         {
             return $this->redirectToRoute('error', ['exception' => $exception]);
@@ -68,7 +68,7 @@ class GestionApiController extends AbstractController
         try{
             $repo->add($post, true);
             $this->addFlash('success', 'Se ha añadido correctamente la media.');
-            return $this->redirectToRoute('nuevaMedia');
+            return $this->redirectToRoute('app_home_index');
         }catch(Exception $exception)
         {
             return $this->redirectToRoute('error', ['exception' => $exception]);
@@ -93,7 +93,7 @@ class GestionApiController extends AbstractController
         try{
             $repo->add($post, true);
             $this->addFlash('success', 'Se ha añadido correctamente la empresa.');
-            return $this->redirectToRoute('listaEmpresas');
+            return $this->redirectToRoute('app_home_index');
         }catch(Exception $exception)
         {
             return $this->redirectToRoute('error', ['exception' => $exception]);
@@ -105,7 +105,7 @@ class GestionApiController extends AbstractController
         try{
             $repo->add($post, true);
             $this->addFlash('success', 'Se ha añadido correctamente la persona.');
-            return $this->redirectToRoute('listaPersonas');
+            return $this->redirectToRoute('app_home_index');
         }catch(Exception $exception)
         {
             return $this->redirectToRoute('error', ['exception' => $exception]);
