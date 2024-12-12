@@ -24,12 +24,12 @@ body {
   color: #0f809a !important;
 }
 
-.titulo-primario {
-  color: #00a0c4 !important;
+.titulo-libro {
+  color: #e27b05 !important;
 }
 
-.titulo-primario {
-  color: #00a0c4 !important;
+.titulo-videojuego {
+  color: #0f9a21 !important;
 }
 
 .titulo-primario {
@@ -121,4 +121,8 @@ i {
 
 .texto-error {
   color: #860000;
+}
+
+.fila {
+  margin-bottom: 20px;
 }

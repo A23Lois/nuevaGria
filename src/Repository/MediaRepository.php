@@ -63,6 +63,17 @@ class MediaRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByIdTipoMedia(int $idTipoMedia)
+    {
+       return $this->createQueryBuilder('media')
+            ->andWhere('media.idTipoMedia = :idTipoMedia')
+            ->orderBy('media.id', 'DESC')
+            ->setParameter('idTipoMedia', $idTipoMedia)
+            ->getQuery()
+            ->getResult();
+    }
+
+
     public function findByTitulo(string $titulo)
     {
        return $this->createQueryBuilder('media')

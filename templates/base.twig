@@ -51,9 +51,13 @@
             <div class="offcanvas-body">
                 <!-- Enlaces de navegación dentro del sidebar -->
                 <ul class="nav flex-column">
-                    
+                    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                        <li class="nav-item">
+                            <a class="nav-link active enlace-primario" href="{{ path('UsuarioPerfil') }}">Mi perfil  <i class="bi bi-person-circle"></i></a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link active enlace-primario" aria-current="page" href="{{ path('app_home_index') }}">Inicio <i class="bi bi-house-fill"></i></a>
+                        <a class="nav-link active enlace-primario" aria-current="page" href="{{ path('app_home_index') }}">Inicio  <i class="bi bi-house-fill"></i></a>
                     </li>
 
                     {% if is_granted('ROLE_ADMIN') %}
@@ -86,13 +90,16 @@
                     </li>
                     {% endif %}
                     <li class="nav-item">
-                        <a class="nav-link enlace-primario" href="#">Acerca de</a>
+                        <a class="nav-link active enlace-primario" href="{{ path('buscarPorTipoMedia', { idTipoMedia: 1 })}}" class="text-decoration-none text-reset">Videojuegos <i class="bi bi-dpad-fill"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link enlace-primario" href="#">Servicios</a>
+                        <a class="nav-link active enlace-primario" href="{{ path('buscarPorTipoMedia', { idTipoMedia: 2 })}}" class="text-decoration-none text-reset">Series <i class="bi bi-tv-fill"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link enlace-primario" href="#">Contacto</a>
+                        <a class="nav-link active enlace-primario" href="{{ path('buscarPorTipoMedia', { idTipoMedia: 3 })}}" class="text-decoration-none text-reset">Peliculas <i class="bi bi-film"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active enlace-primario" href="{{ path('buscarPorTipoMedia', { idTipoMedia: 4 })}}" class="text-decoration-none text-reset">Libros <i class="bi bi-book-fill"></i></a>
                     </li>
                 </ul>
             </div>

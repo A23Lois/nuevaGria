@@ -6,17 +6,29 @@
     <h2 class="titulo-primario">{{app.user.usuario}}</h2>
     <h4>{{app.user.email}}</h4>
     <h5 class="text-center titulo-primario">Mi lista</h5>
-    <div class="offset-3 col-6">
-
-        <div class="row">
+    <div class="offset-1 col-10">
+            <div class="comentarios row">
+        {% if medias != null %}
         {% for media in medias %}
                 <a href="{{ path('verMedia', { id: media.id })}}" class="text-decoration-none text-reset">
-                    <div class="row obj obj-{{media.idTipoMedia}}">
-                        <div class="col-3"><img class="img-ficha" src = {{media.urlImagen}}></img></div>
-                        <div class="col-9"><h5 class="text-center ">{{ media.titulo }}</h5></div>
+                    <div class="col-12 col-md-10 offset-1 mb-3 obj obj-{{media.idTipoMedia}}">
+                        <div class="row">
+                            <div class="col-2"><img class="img-ficha" src = {{media.urlImagen}}></img></div>
+                            <div class="col-9">
+                                <h5 class="text-center ">{{ media.titulo }}</h5>
+                                <div> {{ media.descripcion }}</div>
+                            </div>
+                            
+                        </div>
                     </div>
                 </a>  
         {% endfor %}
+        {% else %}
+            <div class="comentarios">
+                <h4 class="col-12 text-center">No hay ningún titulo añadido a tu lista, ¡Busca el primero con la barra de navegación superior!</h4>
+            </div>
+
+        {% endif %}
         </div>
     </div>
 </div>

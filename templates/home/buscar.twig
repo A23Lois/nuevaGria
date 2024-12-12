@@ -3,7 +3,13 @@
      {{ parent() }} | Buscador
 {% endblock %}
 {% block body %}
+    <div class="mt-2">
+        <div class="text-center">
+            <h4 class=" my-4 titulo-{{ tiposMedias[medias[0].idTipoMedia]|lower}}">{{ medias|length }} Resultados</h4>
+        </div>
+    </div>
     {% for media in medias %}
+
         <a href="{{ path('verMedia', { id: media.id })}}" class="text-decoration-none text-reset">
             <div class="offset-2 mt-2 col-8">
                 <div class="row obj obj-{{media.idTipoMedia}}">
@@ -12,13 +18,18 @@
                     <div class="col-10">
                         <h5 class="titulo-{{ tiposMedias[media.idTipoMedia]|lower }}">{{ media.titulo }}</h5>
                         <p>{{ media.tituloOriginal }}</p>
+                        <p>{{ media.fechaEstreno|date('d/m/Y') }}</p>
                         <div>{{ media.descripcion }}</div>
                         <br>
                         <br>
-                        <p> {{ tiposMedias[media.idTipoMedia] }} </p>
                     </div>
                 </div>
             </div>
         </a>
     {% endfor %}
+{% endblock %}
+{% block scripts %}
+<script>
+    
+</script>
 {% endblock %}

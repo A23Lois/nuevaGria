@@ -51,6 +51,19 @@ class HomeController extends AbstractController
         ]);
     }
 
+    #[Route('/buscarXTipoMedia/{idTipoMedia}', name:'buscarPorTipoMedia')]
+    public function buscarPorTipo(int $idTipoMedia)
+    { 
+        $tipoMedia = $this->repoTipoMedia->getById($idTipoMedia);
+        $diccionarioTiposMedias = [];
+        $diccionarioTiposMedias[$tipoMedia->getId()] = $tipoMedia->getTipoMedia();
+    
+        return $this->render('home/buscar.twig',[
+            'medias' => $this->repoMedia->findByIdTipoMedia($idTipoMedia),
+            'tiposMedias' => $diccionarioTiposMedias,
+        ]);
+    }
+
     #[Route('/ver/media/{id}', name:'verMedia')]
     public function verMedia(int $id)
     {   
