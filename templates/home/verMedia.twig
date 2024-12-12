@@ -20,6 +20,9 @@
                 <div>{{ media.descripcion }}</div>
                 <br>
                 <br>
+                {% for genero in generos %}
+                    <a class="btn btn-sm btn-{{ tipoMedia.tipoMedia|lower }}"> {{ genero.genero }} </a>
+                {% endfor %}
             </div>
             <div class="col-12 text-end">
                 {% if is_granted('ROLE_ADMIN') %}
@@ -114,14 +117,14 @@
                 },
                 success: function(response) {
                     if (response.status === 'success') {
-                        alert('Comentario guardado con exito');
+                        $("#frmComentario").hide();
+                        $("#divComentario").text($("#miComentario").val());
+                        $("#divComentario").show();
+                        $("#btnComentar").show();
                     } else {
                         alert('Error al guardar comentario');
                     }
-                    $("#frmComentario").hide();
-                    $("#divComentario").text($("#miComentario").val());
-                    $("#divComentario").show();
-                    $("#btnComentar").show();
+
                 },
                 error: function(xhr, status, error) {
                     alert('Error: ' + error);

@@ -16,6 +16,57 @@ class GeneroMediaRepository extends ServiceEntityRepository
         parent::__construct($registry, GeneroMedia::class);
     }
 
+    public function delete(int $id): void
+    {
+        $generoMedia = $this->getById($id);
+        $entityManager = $this->getEntityManager();
+
+        if ($generoMedia) {
+            $entityManager->remove($generoMedia);
+            $entityManager->flush();
+        }
+    }
+
+    public function add(GeneroMedia $generoMedia, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($generoMedia);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function getById(int $id)
+    {
+       return $this->createQueryBuilder('generoMedia')
+            ->andWhere('generoMedia.id = :id')
+            ->setParameter('id', $id)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findByIdMedia(int $idMedia)
+    {
+       return $this->createQueryBuilder('generoMedia')
+            ->andWhere('generoMedia.idMedia = :idMedia')
+            ->orderBy('generoMedia.idGenero', 'DESC')
+            ->setParameter('idMedia', $idMedia)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getByMediaGenero(int $idMedia, int $idGenero)
+    {
+       return $this->createQueryBuilder('generoMedia')
+            ->andWhere('generoMedia.idMedia = :idMedia and generoMedia.idGenero = :idGenero')
+            ->setParameter('idMedia', $idMedia)
+            ->setParameter('idGenero', $idGenero)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     //    /**
     //     * @return GeneroMedia[] Returns an array of GeneroMedia objects
     //     */

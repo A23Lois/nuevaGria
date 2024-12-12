@@ -7,13 +7,8 @@ body {
 }
 
 .btn-primario:hover {
-  background: #0f809a;
-  color: white;
-}
-
-.btn-primario:active {
-  background: #0f809a;
-  color: white;
+  background: #0f809a !important;
+  color: white !important;
 }
 
 .titulo-pelicula {
@@ -30,6 +25,43 @@ body {
 
 .titulo-videojuego {
   color: #0f9a21 !important;
+}
+
+.btn-pelicula {
+  background: #c5136c !important;
+  color: white;
+}
+.btn-pelicula:hover {
+  background: #960f52 !important;
+  color: white !important;
+}
+
+.btn-serie {
+  background: #0f809a !important;
+  color: white;
+}
+.btn-serie:hover {
+  background: #0c5d6f !important;
+  color: white !important;
+}
+
+.btn-libro {
+  background: #e27b05 !important;
+  color: white;
+}
+
+.btn-libro:hover {
+  background: #9e5501 !important;
+  color: white !important;
+}
+
+.btn-videojuego {
+  background: #0f9a21 !important;
+  color: white;
+}
+.btn-videojuego:hover {
+  background: #077a17 !important;
+  color: white !important;
 }
 
 .titulo-primario {

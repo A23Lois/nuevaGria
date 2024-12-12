@@ -17,7 +17,7 @@ class Genero
     private ?string $genero = null;
 
     #[ORM\Column]
-    private ?int $tipoMedia = null;
+    private ?int $idTipoMedia = null;
 
     public function getId(): ?int
     {
@@ -36,14 +36,14 @@ class Genero
         return $this;
     }
 
-    public function getTipoMedia(): ?int
+    public function getIdTipoMedia(): ?int
     {
-        return $this->tipoMedia;
+        return $this->idTipoMedia;
     }
 
-    public function setTipoMedia(int $tipoMedia): static
+    public function setIdTipoMedia(int $idTipoMedia): static
     {
-        $this->tipoMedia = $tipoMedia;
+        $this->idTipoMedia = $idTipoMedia;
 
         return $this;
     }

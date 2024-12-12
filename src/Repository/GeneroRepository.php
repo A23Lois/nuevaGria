@@ -25,6 +25,16 @@ class GeneroRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByIdTipoMedia(int $idTipoMedia)
+    {
+       return $this->createQueryBuilder('genero')
+            ->andWhere('genero.idTipoMedia = :idTipoMedia')
+            ->orderBy('genero.genero', 'DESC')
+            ->setParameter('idTipoMedia', $idTipoMedia)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getById($id): Genero
     {
        return $this->createQueryBuilder('genero')

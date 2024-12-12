@@ -29,7 +29,7 @@ class GeneroFormType extends AbstractType
         //dd($arrayTiposMedia);
 
         $builder
-        ->add('TipoMedia', ChoiceType::class, [
+        ->add('IdTipoMedia', ChoiceType::class, [
             'attr' => ['class' => 'form-control'],
             'choices' => $arrayTiposMedia,
         ])        

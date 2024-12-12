@@ -4,7 +4,7 @@
 {% block body %}
 <div class="row">
     {% if id == 0 %}
-    <div class="col-10 offset-1 ficha">
+    <div class="col-7 offset-1 ficha">
         <h2 class="titulo-primario">Añadir via api</h2>
         <label for="tituloAdd">Titulo a añadir</label>
         <div class="input-group">
@@ -13,7 +13,7 @@
         </div>
     </div>
     {% endif %}
-    <div class="col-10 offset-1 ficha">
+    <div class="col-7 offset-1 ficha">
             {% if id == 0 %}
                 <h2 class="titulo-primario">Añadir manualmente</h2>
             {% else %}
@@ -27,8 +27,34 @@
             </div>
             {% endif %}
         {{ form(form)}}
-
     </div>
+    {% if id != 0 %}
+        <div class="col-3 ms-4 ficha">
+            <h2 class="titulo-primario">Géneros</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Género</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+            {% for genero in generos %}
+            <tr>
+                <td><a class="text-decoration-none titulo-primario" href="{{ path('editarGenero', { id: genero.id })}}">{{ genero.genero }}</a></td>
+                <td>
+                    {% if genero.id in generosMedia %}
+                        <a class="btn btn-sm btn-danger btnEliminarGenero" data-id="{{genero.id}}"> Eliminar</a>
+                    {% else %}
+                        <a class="btn btn-sm btn-primario btnAddGenero" data-id="{{genero.id}}"> Añadir</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+            </table>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}
 {% block scripts %}
@@ -38,5 +64,72 @@
         enlace = enlace.replace('busqueda',$("#tituloAdd").val());
         window.open(enlace, '_self');
     });
+
+    $(".btnAddGenero").click(function (){
+        const btnAddGenero = $(this)
+        guardarGenero(btnAddGenero);
+    });
+
+    $(".btnEliminarGenero").click(function (){
+        const btnEliminarGenero = $(this);
+        eliminarGenero(btnEliminarGenero);
+    });
+
+    function eliminarGenero(btnEliminarGenero){
+        $.ajax({
+            url: '{{ path("eliminarGeneroMedia") }}',
+            type: 'POST',
+            data: { 
+                idMedia: '{{ id }}',
+                idGenero: btnEliminarGenero.data('id'),
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    btnEliminarGenero.removeClass('btnEliminarGenero');
+                    btnEliminarGenero.removeClass('btn-danger');
+                    btnEliminarGenero.addClass('btnAddGenero');
+                    btnEliminarGenero.addClass('btn-primario');
+                    btnEliminarGenero.text('Añadir');
+                    btnEliminarGenero.click(function(){
+                        guardarGenero(btnEliminarGenero);
+                    });
+                }else{
+                    alert('Error al eliminar genero');
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Error: ' + error);
+            }
+        });
+    }
+
+    function guardarGenero(btnAddGenero){
+        $.ajax({
+            url: '{{ path("addGeneroMedia") }}',
+            type: 'POST',
+            data: { 
+                idMedia: '{{ id }}',
+                idGenero: btnAddGenero.data('id'),
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    btnAddGenero.removeClass('btnAddGenero');
+                    btnAddGenero.removeClass('btn-primario');
+                    btnAddGenero.addClass('btnEliminarGenero');
+                    btnAddGenero.addClass('btn-danger');
+                    btnAddGenero.text('Eliminar');
+                    btnAddGenero.click(function(){
+                        eliminarGenero(btnAddGenero);
+                    });
+                }else{
+                    alert('Error al guardar genero');
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('Error: ' + error);
+            }
+        });
+    }
+
 </script>
 {% endblock %}

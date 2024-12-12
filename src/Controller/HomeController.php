@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Entity\Media;
 use App\Entity\Usuario;
 use App\Repository\ComentarioRepository;
+use App\Repository\GeneroMediaRepository;
+use App\Repository\GeneroRepository;
 use App\Repository\ListaMediaRepository;
 use App\Repository\MediaRepository;
 use App\Repository\TipoMediaRepository;
@@ -13,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
-    public function __construct(private MediaRepository $repoMedia, private TipoMediaRepository $repoTipoMedia, private UsuarioRepository $repoUsuario, private ListaMediaRepository $repoListaMedia, private ComentarioRepository $repoComentario)
+    public function __construct(private MediaRepository $repoMedia, private TipoMediaRepository $repoTipoMedia, private UsuarioRepository $repoUsuario, private ListaMediaRepository $repoListaMedia, private ComentarioRepository $repoComentario, private GeneroMediaRepository $repoGeneroMedia, private GeneroRepository $repoGenero)
     {
         
     }
@@ -51,7 +53,7 @@ class HomeController extends AbstractController
         ]);
     }
 
-    #[Route('/buscarXTipoMedia/{idTipoMedia}', name:'buscarPorTipoMedia')]
+    #[Route('/buscar/TipoMedia/{idTipoMedia}', name:'buscarPorTipoMedia')]
     public function buscarPorTipo(int $idTipoMedia)
     { 
         $tipoMedia = $this->repoTipoMedia->getById($idTipoMedia);
@@ -71,15 +73,24 @@ class HomeController extends AbstractController
         $esComentado = false;
         $media = $this->repoMedia->getById($id);
         $comentarios = $this->repoComentario->findByMedia($id);
-        $diccionarioUsuarios = [];
+        $generosMedia = $this->repoGeneroMedia->findByIdMedia($id);
         $tipoMedia = $this->repoTipoMedia->getById($media->getIdTipoMedia());
         $comentario = null;
         $usuarioLoggeado = $this->getUser();
 
-        foreach ($comentarios as $comentarioLista)
+        $diccionarioUsuarios = [];
+        $generos = [];
+
+        foreach ($comentarios as $comentarioLista)//obtiene todos los comentarios de la media
         {
             $usuarioComentario = $this->repoUsuario->getById($comentarioLista->getIdUsuario());
             $diccionarioUsuarios[$comentarioLista->getId()] = $usuarioComentario->getUsuario();
+        }
+
+        foreach ($generosMedia as $generoMedia)//obtiene todos los generos de la media
+        {
+            $genero = $this->repoGenero->getById($generoMedia->getIdGenero());
+            $generos[] = $genero;
         }
 
         if($usuarioLoggeado != null){
@@ -105,7 +116,8 @@ class HomeController extends AbstractController
             'comentarios' => $comentarios,
             'comentario' => $comentario,
             'esComentado' => $esComentado,
-            'usuarios' => $diccionarioUsuarios
+            'usuarios' => $diccionarioUsuarios,
+            'generos' => $generos
         ]);
     }
 

@@ -220,18 +220,28 @@ public function __construct(private GestionApiController $gestionApiController)
     }
         //--------------EDITAR
     #[Route('/gestion/editarMedia/{id}', name:'editarMedia')]
-    public function editarMedia(MediaRepository $repo, Request $request, int $id)
+    public function editarMedia(MediaRepository $repoMedia, GeneroRepository $repoGenero,GeneroMediaRepository $repoGeneroMedia, Request $request, int $id)
     {
-        $media = $repo->getById($id);
+        $media = $repoMedia->getById($id);
+        $generosMedia = $repoGeneroMedia->findByIdMedia($media->getId());
+        $generosGenerosMedia = [];
+        foreach ($generosMedia as $generoMedia)
+        {
+            $generosGenerosMedia[] = $generoMedia->getIdGenero();
+        }
+        //dd($diccionarioGenerosMedia);
+        $generos = $repoGenero->findByIdTipoMedia($media->getIdTipoMedia());
         $form = $this->createForm(MediaFormType::class, $media);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $post = $form->getData();
-            return $this->gestionApiController->guardarMedia($repo, $post);
+            return $this->gestionApiController->guardarMedia($repoMedia, $post);
         }
         return $this->render('gestion/editarMedia.twig',[
             'form' => $form,
-             'id' => $id
+             'id' => $id,
+             'generos' => $generos,
+             'generosMedia' => $generosGenerosMedia,
             ]);
     }
     //--------------EMPRESA

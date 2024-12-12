@@ -2,6 +2,10 @@
 
 namespace App\Controller;
 
+use Exception;
+use App\Entity\GeneroMedia;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use App\Repository\GeneroRepository;
 use App\Repository\TipoAporteRepository;
 use App\Repository\TipoMediaRepository;
@@ -25,55 +29,130 @@ class GestionApiController extends AbstractController
     }
     public function guardarTipoAporte (TipoAporteRepository $repo, $post)
     {
-        $repo->add($post, true);
-        $this->addFlash('success', 'Se ha añadido correctamente el tipo de aporte.');
-        return $this->redirectToRoute('listaTiposAportes');
-
+        try{
+            $repo->add($post, true);
+            $this->addFlash('success', 'Se ha añadido correctamente el tipo de aporte.');
+            return $this->redirectToRoute('listaTiposAportes');
+        }catch(Exception $exception)
+        {
+            return $this->redirectToRoute('error', ['exception' => $exception]);
+        }
     }
 
     public function guardarTipoMedia (TipoMediaRepository $repo, $post)
     {
-        $repo->add($post, true);
-        $this->addFlash('success', 'Se ha añadido correctamente el tipo de aporte.');
-        return $this->redirectToRoute('listaTiposMedias');
-
+        try{
+            $repo->add($post, true);
+            $this->addFlash('success', 'Se ha añadido correctamente el tipo de aporte.');
+            return $this->redirectToRoute('listaTiposMedias');
+        }catch(Exception $exception)
+        {
+            return $this->redirectToRoute('error', ['exception' => $exception]);
+        }
     }
 
     public function guardarGenero (GeneroRepository $repo, $post)
     {
-        $repo->add($post, true);
-        $this->addFlash('success', 'Se ha añadido correctamente el género.');
-        return $this->redirectToRoute('listaGeneros');
+        try{
+            $repo->add($post, true);
+            $this->addFlash('success', 'Se ha añadido correctamente el género.');
+            return $this->redirectToRoute('listaGeneros');
+        }catch(Exception $exception)
+        {
+            return $this->redirectToRoute('error', ['exception' => $exception]);
+        }
     }
 
     public function guardarMedia (MediaRepository $repo, $post)
     {
-        $repo->add($post, true);
-        $this->addFlash('success', 'Se ha añadido correctamente la media.');
-        return $this->redirectToRoute('nuevaMedia');
+        try{
+            $repo->add($post, true);
+            $this->addFlash('success', 'Se ha añadido correctamente la media.');
+            return $this->redirectToRoute('nuevaMedia');
+        }catch(Exception $exception)
+        {
+            return $this->redirectToRoute('error', ['exception' => $exception]);
+        }
     }
 
     #[Route('/gestion/eliminarMedia/{id}', name:'eliminarMediaDB')]
     public function eliminarMedia (MediaRepository $repo, $id)
     {
-        $repo->delete($id, true);
-        $this->addFlash('success', 'Se ha eliminado correctamente la media.');
-        return $this->redirectToRoute('app_home_index');
+        try{
+            $repo->delete($id, true);
+            $this->addFlash('success', 'Se ha eliminado correctamente la media.');
+            return $this->redirectToRoute('app_home_index');
+        }catch(Exception $exception)
+        {
+            return $this->redirectToRoute('error', ['exception' => $exception]);
+        }
     }
 
     public function guardarEmpresa (EmpresaRepository $repo, $post)
     {
-        $repo->add($post, true);
-        $this->addFlash('success', 'Se ha añadido correctamente la empresa.');
-        return $this->redirectToRoute('listaEmpresas');
+        try{
+            $repo->add($post, true);
+            $this->addFlash('success', 'Se ha añadido correctamente la empresa.');
+            return $this->redirectToRoute('listaEmpresas');
+        }catch(Exception $exception)
+        {
+            return $this->redirectToRoute('error', ['exception' => $exception]);
+        }
     }
 
     public function guardarPersona (PersonaRepository $repo, $post)
     {
-        $repo->add($post, true);
-        $this->addFlash('success', 'Se ha añadido correctamente la persona.');
-        return $this->redirectToRoute('listaPersonas');
+        try{
+            $repo->add($post, true);
+            $this->addFlash('success', 'Se ha añadido correctamente la persona.');
+            return $this->redirectToRoute('listaPersonas');
+        }catch(Exception $exception)
+        {
+            return $this->redirectToRoute('error', ['exception' => $exception]);
+        }
+
     }
     
+    #[Route('/gestion/guardarGeneroMedia', name:'addGeneroMedia')]
+    public function guardarGeneroMedia (GeneroMediaRepository $repo,Request $request)
+    {
+        $idMedia =(int) $request->request->get('idMedia');
+        $idGenero =(int) $request->request->get('idGenero');
+
+        try{
+            $generoMedia = new GeneroMedia ();
+            $generoMedia->setIdMedia($idMedia);
+            $generoMedia->setIdGenero($idGenero);
+            $repo->add($generoMedia, true);
+
+            $this->addFlash('success', 'Se ha añadido correctamente la persona.');
+            return new JsonResponse([
+                'status' => 'success',
+            ]);
+
+        }catch(Exception $exception){
+            return $this->redirectToRoute('error', ['exception' => $exception]);
+        }
+    }
+
+    #[Route('/gestion/eliminarGeneroMedia', name:'eliminarGeneroMedia')]
+    public function eliminarGeneroMedia (GeneroMediaRepository $repo,Request $request)
+    {
+        $idMedia =(int) $request->request->get('idMedia');
+        $idGenero =(int) $request->request->get('idGenero');
+
+        try{
+            $generoMedia = $repo->getByMediaGenero($idMedia, $idGenero);
+            $repo->delete($generoMedia->getId());
+
+            $this->addFlash('success', 'Se ha eliminado correctamente el genero de la media.');
+            return new JsonResponse([
+                'status' => 'success',
+            ]);
+
+        }catch(Exception $exception){
+            return $this->redirectToRoute('error', ['exception' => $exception]);
+        }
+    }
 
 }
