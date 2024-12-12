@@ -79,7 +79,7 @@ class MediaRepository extends ServiceEntityRepository
        return $this->createQueryBuilder('media')
             ->andWhere('media.titulo like :titulo or media.tituloOriginal like :titulo')
             ->setParameter('titulo', '%'.$titulo.'%')
-            ->orderBy('media.id', 'ASC')
+            ->orderBy('media.titulo', 'ASC')
             ->getQuery()
             ->getResult();
     }

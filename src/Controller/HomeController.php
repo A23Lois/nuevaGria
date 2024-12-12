@@ -42,14 +42,30 @@ class HomeController extends AbstractController
         $tiposMedias = $this->repoTipoMedia->findAll();
         $diccionarioTiposMedias = [];
 
+        $medias = $this->repoMedia->findByTitulo($titulo);
+
+        foreach($medias as $media)
+        {
+            $media->setDescripcion(substr($media->getDescripcion(), 0, 600)."..."); 
+        }
+
         foreach ($tiposMedias as $tipoMedia)
         {
             $diccionarioTiposMedias[$tipoMedia->getId()] = $tipoMedia->getTipoMedia();
         }
 
         return $this->render('home/buscar.twig',[
-            'medias' => $this->repoMedia->findByTitulo($titulo),
+            'medias' => $medias,
             'tiposMedias' => $diccionarioTiposMedias,
+            'textoBusqueda' => 'Busqueda por titulo: "'.$titulo.'"',
+        ]);
+    }
+
+    #[Route('/buscar/usuario/{usuario}', name:'buscarUsuario')]
+    public function buscarUsuario(string $usuario)
+    {   
+        return $this->render('home/buscarUsuario.twig',[
+            'usuarios' => $this->repoUsuario->findByUsuario($usuario),
         ]);
     }
 
@@ -63,6 +79,33 @@ class HomeController extends AbstractController
         return $this->render('home/buscar.twig',[
             'medias' => $this->repoMedia->findByIdTipoMedia($idTipoMedia),
             'tiposMedias' => $diccionarioTiposMedias,
+            'textoBusqueda' => 'Busqueda por tipo: '.$tipoMedia->getTipoMedia(),
+        ]);
+    }
+    
+    #[Route('/buscar/Genero/{idGenero}', name:'buscarPorGenero')]
+    public function buscarPorGenero(int $idGenero)
+    { 
+        $tiposMedias = $this->repoTipoMedia->findAll();
+        $diccionarioTiposMedias = [];
+
+        $genero = $this->repoGenero->getById($idGenero);
+        $generoMedias = $this->repoGeneroMedia->findByIdGenero($idGenero);
+        $medias = [];
+        foreach ($generoMedias as $generoMedia)
+        {
+            $medias [] = $this->repoMedia->getById($generoMedia->getIdMedia());
+        }
+
+        foreach ($tiposMedias as $tipoMedia)
+        {
+            $diccionarioTiposMedias[$tipoMedia->getId()] = $tipoMedia->getTipoMedia();
+        }
+    
+        return $this->render('home/buscar.twig',[
+            'medias' => $medias,
+            'tiposMedias' => $diccionarioTiposMedias,
+            'textoBusqueda' => 'Busqueda por genero: '.$genero->getGenero(),
         ]);
     }
 
@@ -84,7 +127,7 @@ class HomeController extends AbstractController
         foreach ($comentarios as $comentarioLista)//obtiene todos los comentarios de la media
         {
             $usuarioComentario = $this->repoUsuario->getById($comentarioLista->getIdUsuario());
-            $diccionarioUsuarios[$comentarioLista->getId()] = $usuarioComentario->getUsuario();
+            $diccionarioUsuarios[$comentarioLista->getId()] = $usuarioComentario;
         }
 
         foreach ($generosMedia as $generoMedia)//obtiene todos los generos de la media
@@ -128,15 +171,50 @@ class HomeController extends AbstractController
         $usuario = $this->repoUsuario->getByCorreo($correo);
         $listaMedias = $this->repoListaMedia->findByUsuario($usuario->getId());
         $medias = [];
+        $comentarios = [];
         foreach ($listaMedias as $listaMedia)
         {
             $media = $this->repoMedia->getById($listaMedia->getIdMedia());
+            $media->setDescripcion(substr($media->getDescripcion(), 0, 600)."...");
+            $comentario = $this->repoComentario->getByUsuarioMedia($usuario->getId(), $media->getId());
             $medias[$media->getId()] = $media;
+            if($comentario !=  null)
+            {
+                $comentarios[$media->getId()] = $comentario->getComentario();
+            }
         }
         
         return $this->render('usuario/perfil.twig', [
             'medias' => $medias,
             'listaMedias' => $listaMedias,
+            'comentarios' => $comentarios,
+        ]);
+    }
+
+    #[Route('/usuario/perfil/{id}', name:'OtroUsuarioPerfil')]
+    public function verPerfilOtroUsuario($id)
+    {
+        $usuario = $this->repoUsuario->getById($id);
+        $listaMedias = $this->repoListaMedia->findByUsuario($usuario->getId());
+        $medias = [];
+        $comentarios = [];
+        foreach ($listaMedias as $listaMedia)
+        {
+            $media = $this->repoMedia->getById($listaMedia->getIdMedia());
+            $media->setDescripcion(substr($media->getDescripcion(), 0, 600)."..."); 
+            $comentario = $this->repoComentario->getByUsuarioMedia($usuario->getId(), $media->getId());
+            $medias[$media->getId()] = $media;
+            if($comentario !=  null)
+            {
+                $comentarios[$media->getId()] = $comentario->getComentario();
+            }
+        }
+        
+        return $this->render('usuario/otroPerfil.twig', [
+            'usuario' => $usuario,
+            'medias' => $medias,
+            'listaMedias' => $listaMedias,
+            'comentarios' => $comentarios,
         ]);
     }
     

@@ -1,0 +1,29 @@
+{% extends 'base.twig' %} 
+{% block title %}
+     {{ parent() }} | Buscador Usuarios
+{% endblock %}
+{% block body %}
+    <div class="mt-2">
+        <div class="text-center">
+            <h4 class=" my-4 titulo-primario">{{ usuarios|length }} Resultados</h4>
+        </div>
+    </div>
+    {% for usuario in usuarios %}
+
+        <a href="{{ path('OtroUsuarioPerfil', { id: usuario.id })}}" class="text-decoration-none text-reset">
+            <div class="offset-lg-2 mt-2 col-lg-8 col-12">
+                <div class="row obj obj-2">
+                    <div class="col-10">
+                        <h5 class="titulo-primario mt-2">{{ usuario.usuario }}</h5>
+                        <p>{{ usuario.email }}</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+{% endblock %}
+{% block scripts %}
+<script>
+    
+</script>
+{% endblock %}

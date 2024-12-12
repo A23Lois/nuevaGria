@@ -5,8 +5,8 @@
 <div class="ficha">
     <div class="row">
     <div class="col-6">
-        <h2 class="titulo-primario">{{app.user.usuario}}</h2>
-        <h4>{{app.user.email}}</h4>
+        <h2 class="titulo-primario">{{ usuario.usuario}}</h2>
+        <h4>{{usuario.email}}</h4>
     </div>
     <div class="col-6">
         <div class="input-group">
@@ -15,9 +15,9 @@
         </div>
     </div>
     </div>
-    <h5 class="text-center titulo-primario">Mi lista</h5>
+    <h5 class="text-center titulo-primario">Lista de {{ usuario.usuario }}</h5>
     <div class="offset-1 col-10">
-            <div class="comentarios row">
+        <div class="comentarios row">
         {% if medias != null %}
         {% for media in medias %}
                 <a href="{{ path('verMedia', { id: media.id })}}" class="text-decoration-none text-reset">
@@ -27,7 +27,7 @@
                             <div class="col-9">
                                 <h4 class="text-center">{{ media.titulo }}</h4>
                                 {% if media.id in comentarios|keys %}
-                                    <div><h5 class="titulo-primario text-center">Mi comentario</h5></div>
+                                    <div><h5 class="titulo-primario text-center">Comentario de {{usuario.usuario}}</h5></div>
                                     <div class="text-center"> {{comentarios[media.id]}} </div>
                                 {% else %}
                                     <div><h5 class="titulo-primario text-center">Descripcion</h5></div>
