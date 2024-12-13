@@ -69,7 +69,7 @@
 
                     {% if comentario == null or comentarioLista.id != comentario.id %}
                         <div class="row mx-2 my-2 obj-2 comentario">
-                            <div class="col-2 text-center mb-4"><a class="text-decoration-none titulo-primario" href="{{ path('OtroUsuarioPerfil', { id: usuarios[comentarioLista.id].id })}}">{{usuarios[comentarioLista.id].usuario}}</a></div>
+                            <div class="col-2 text-center mb-4"><a class="text-decoration-none titulo-primario" href="{{ path('OtroUsuarioPerfil', { id: usuarios[comentarioLista.id].id })}}"><h4>{{usuarios[comentarioLista.id].usuario}}</h4></a></div>
                             <div class="col-9"> {{comentarioLista.comentario}} </div>
                         </div>
                     {% endif %}
@@ -117,10 +117,14 @@
                 },
                 success: function(response) {
                     if (response.status === 'success') {
+                        '{% if comentario != null %}'
                         $("#frmComentario").hide();
                         $("#divComentario").text($("#miComentario").val());
                         $("#divComentario").show();
                         $("#btnComentar").show();
+                        '{% else %}'
+                            window.open("{{ path('verMedia', { id: media.id })}}", '_self');
+                        '{% endif %}'
                     } else {
                         alert('Error al guardar comentario');
                     }
